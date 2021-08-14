@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fruitapp/widgets/item_grid_mixin.dart';
 
 import '../Card/GridCard.dart';
 import '../Card/GridDataModel.dart';
@@ -19,39 +20,20 @@ class SubNameFruitDialog extends StatefulWidget {
   _SnameFruitDialog createState() => _SnameFruitDialog();
 }
 
-class _SnameFruitDialog extends State<SubNameFruitDialog> {
+class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
+  double dialogHorizontalWidth = 24;
+
   @override
   void initState() {
     super.initState();
     SubNameFruitDialog.selectedList.clear();
   }
 
-  Widget gridViewBuilder(List<GridCard> list){
-
-    return GridView.builder(
-      itemCount:list.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: (1 / 1.3),
-      ),
-      itemBuilder: (context,index,) {
-        return GestureDetector(
-            onTap:(){
-              // Navigator.of(context).pushNamed(RouteName.GridViewCustom);
-            },
-            child:list[index]
-        );
-      },
-    );
-
-  }
-
-  double dialogHorizontalWidth = 24;
   @override
   Widget build(BuildContext context) {
-
     return Dialog(
-      insetPadding:  EdgeInsets.symmetric(horizontal: dialogHorizontalWidth, vertical: 24.0),
+      insetPadding: EdgeInsets.symmetric(
+          horizontal: dialogHorizontalWidth, vertical: 24.0),
       child: Column(mainAxisSize: MainAxisSize.max, children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -71,22 +53,23 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
               ),
             ),
             IconButton(
-                icon:  dialogHorizontalWidth == 0 ? Icon(Icons.zoom_out):Icon(Icons.zoom_in),
-                onPressed: (){
+                icon: dialogHorizontalWidth == 0
+                    ? Icon(Icons.zoom_out)
+                    : Icon(Icons.zoom_in),
+                onPressed: () {
                   setState(() {
-                    dialogHorizontalWidth == 0 ? dialogHorizontalWidth = 24 : dialogHorizontalWidth = 0;
+                    dialogHorizontalWidth == 0
+                        ? dialogHorizontalWidth = 24
+                        : dialogHorizontalWidth = 0;
                   });
-                }
-            ),
-
+                }),
           ],
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.68,
           child: Container(
-            color: Colors.white,
-            child: gridViewBuilder(widget.list)
-          ),
+              color: Colors.white,
+              child: gridViewBuilder(widget.list, () {}, () {})),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -122,11 +105,12 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
                                 null,
                                 null,
                                 null,
-                                details[SubNameFruitDialog.selectedList[i].dummyName]["variants"]
-                                [SubNameFruitDialog.selectedList[i].dummyType.toLowerCase()],
+                                details[SubNameFruitDialog
+                                        .selectedList[i].dummyName]["variants"][
+                                    SubNameFruitDialog.selectedList[i].dummyType
+                                        .toLowerCase()],
                                 SubNameFruitDialog.selectedList[i].dummyName,
-                                SubNameFruitDialog.selectedList[i].dummyType
-                            );
+                                SubNameFruitDialog.selectedList[i].dummyType);
                             var result =
                                 await DatabaseQuery.db.newFruit(newFruit);
                             if (!result) {

@@ -60,8 +60,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/day',
-
-    routes: {
+      routes: {
         '/day': (_) => DayPage(),
         '/calender': (_) => CalenderWidget(),
         '/detail': (_) => InformationPage(),

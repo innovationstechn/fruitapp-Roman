@@ -1,20 +1,15 @@
 class NameFruit {
+  String name, dummyName, imageSource;
 
-  String name,dummyName,imageSource;
-
-  NameFruit({
-    this.name,this.dummyName, this.imageSource});
+  NameFruit({this.name, this.dummyName, this.imageSource});
 
   // Conversion from json to MLKG object
   factory NameFruit.fromMap(Map<String, dynamic> json) => new NameFruit(
-      name:json["name"],
+      name: json["name"],
       dummyName: json["dummyName"],
-      imageSource:json["imageSource"]);
+      imageSource: json["imageSource"]);
 
   // Mapping MLKG for database.
-  Map<String, dynamic> toMap() => {
-    "name": name,
-    "dummyName": dummyName,
-    "imageSource": imageSource
-  };
+  Map<String, dynamic> toMap() =>
+      {"name": name, "dummyName": dummyName, "imageSource": imageSource};
 }

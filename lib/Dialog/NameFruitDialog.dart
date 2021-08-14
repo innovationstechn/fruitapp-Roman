@@ -12,7 +12,6 @@ class NameFruitDialog extends StatefulWidget {
   static bool updated = false;
   static Fruit previousFruit;
 
-
   NameFruitDialog(String date) {
     NameFruitDialog.date = date;
   }
@@ -27,24 +26,24 @@ class NameFruitDialog extends StatefulWidget {
 }
 
 class _nameFruitDialog extends State<NameFruitDialog> {
-
   double dialogHorizontalWidth = 24;
 
-  Widget gridViewBuilder(List<GridCard> list){
-
-   return GridView.builder(
-      itemCount:list.length,
+  Widget gridViewBuilder(List<GridCard> list) {
+    return GridView.builder(
+      itemCount: list.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: (1 / 1.3),
       ),
-      itemBuilder: (context,index,) {
+      itemBuilder: (
+        context,
+        index,
+      ) {
         return GestureDetector(
-          onTap:(){
-            // Navigator.of(context).pushNamed(RouteName.GridViewCustom);
-          },
-          child:list[index]
-        );
+            onTap: () {
+              // Navigator.of(context).pushNamed(RouteName.GridViewCustom);
+            },
+            child: list[index]);
       },
     );
   }
@@ -53,54 +52,57 @@ class _nameFruitDialog extends State<NameFruitDialog> {
   Widget build(BuildContext context) {
     // print("List Length" + widget.list.length.toString());
     return Dialog(
-        insetPadding:  EdgeInsets.symmetric(horizontal: dialogHorizontalWidth, vertical: 24.0),
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: dialogHorizontalWidth, vertical: 24.0),
         child: Consumer<NameFruitModel>(builder: (context, data, child) {
-      return Column(mainAxisSize: MainAxisSize.max, children: [
-        Row(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Name Fruit",
-                  style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.04),
+          return Column(mainAxisSize: MainAxisSize.max, children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Name Fruit",
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height * 0.04),
+                    ),
+                  ),
                 ),
-              ),
+                IconButton(
+                    icon: dialogHorizontalWidth == 0
+                        ? Icon(Icons.zoom_out)
+                        : Icon(Icons.zoom_in),
+                    onPressed: () {
+                      setState(() {
+                        dialogHorizontalWidth == 0
+                            ? dialogHorizontalWidth = 24
+                            : dialogHorizontalWidth = 0;
+                      });
+                    }),
+              ],
             ),
-            IconButton(
-                icon:  dialogHorizontalWidth == 0 ? Icon(Icons.zoom_out):Icon(Icons.zoom_in),
-                onPressed: (){
-                  setState(() {
-                    dialogHorizontalWidth == 0 ? dialogHorizontalWidth = 24 : dialogHorizontalWidth = 0;
-                  });
-                }
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.68,
+              child: Container(
+                  color: Colors.white, child: gridViewBuilder(data.list)),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10, top: 10),
+                child: RaisedButton(
+                    color: Colors.red,
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 15),
+                    )),
               ),
-          ],
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.68,
-          child: Container(
-            color: Colors.white,
-            child:gridViewBuilder(data.list)
-          ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10, top: 10),
-            child: RaisedButton(
-                color: Colors.red,
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(fontSize: 15),
-                )),
-          ),
-        )
-      ]);
-    })); // Diloag ending
+            )
+          ]);
+        })); // Diloag ending
   }
 }

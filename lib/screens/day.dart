@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Dialog/NameFruitDialog.dart';
 import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/models/name_fruit_diialog_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
+import 'package:fruitapp/widgets/category_dialog/category_dialog.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
-import 'statistics.dart';
-
 class DayPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,9 +138,12 @@ class DayPage extends StatelessWidget {
         backgroundColor: Colors.blue,
         onPressed: () {
           print("Initialize Database Called");
-          Provider.of<NameFruitModel>(context,listen: false).initializeDatabase().then((value) => {
-            Provider.of<NameFruitModel>(context, listen: false).refresh()
-          });
+          Provider.of<NameFruitModel>(context, listen: false)
+              .initializeDatabase()
+              .then((value) => {
+                    Provider.of<NameFruitModel>(context, listen: false)
+                        .refresh()
+                  });
           showDialog(
               context: context,
               builder: (context) {
@@ -152,9 +152,9 @@ class DayPage extends StatelessWidget {
                 DateTime currentDate =
                     Provider.of<DayModel>(context).currentDate;
 
-                  return NameFruitDialog(
-                      "${currentDate.day}/${currentDate.month}/${currentDate.year}");
-
+                // return NameFruitDialog(
+                //     "${currentDate.day}/${currentDate.month}/${currentDate.year}");
+                return CategoryDialog();
               }).then((value) => {
                 // After the dialog has been dismissed, clear the list of all
                 // selected fruits selected in the dialog.
