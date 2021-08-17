@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Card/GridCard.dart';
-import 'package:fruitapp/Card/GridDataModel.dart';
+import 'package:fruitapp/Card/NameFruitGridCard.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/NameFruit.dart';
 import 'package:fruitapp/assets.dart';
@@ -11,7 +10,7 @@ import '../SubNameFruit.dart';
 class NameFruitModel extends ChangeNotifier {
   // Load the fruits of a date.
 
-  List<GridCard> list = [];
+  List<GridCardNameFruit> list = [];
 
   Future refresh() async {
     await DatabaseQuery.db
@@ -20,9 +19,7 @@ class NameFruitModel extends ChangeNotifier {
               list.clear(),
               for (int i = 0; i < nameFruitList.length; i++)
                 {
-                  print(list.length),
-                  list.add(new GridCard(new GridCardModel(nameFruitList[i].name,
-                      "", nameFruitList[i].imageSource, ""))),
+                  list.add(new GridCardNameFruit(nameFruitList[i])),
                 },
             })
         .then((value) => notifyListeners());

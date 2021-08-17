@@ -4,6 +4,7 @@ import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/assets.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/models/sub_name_fruit_diialog_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:provider/provider.dart';
@@ -198,12 +199,9 @@ class ViewPageItemWidget extends StatelessWidget {
                           // a dialog is shown to the user.
                           showDialog(
                                   context: context,
-                                  builder: (_) =>
-                                      NameFruitDialog.forUpdate(fruit))
-                              .then((value) => () {
-                                    SubNameFruitDialog
-                                        .newFruitSelectedForUpdate = null;
-                                    NameFruitDialog.updated = false;
+                                  builder: (_){
+                                    Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced = fruit;
+                                    return NameFruitDialog();
                                   });
                         } else if (result == PopupSelection.information) {
                           Navigator.of(context)

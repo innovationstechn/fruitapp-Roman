@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-
+import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/SubNameFruit.dart';
 import '../Fruit.dart';
 import '../MLKG.dart';
-import 'name_fruit_diialog_model.dart';
+
 
 // This model holds data of the fruits of the current day
 // and the operations associated with them.
@@ -13,6 +14,7 @@ class FruitModel extends ChangeNotifier {
   List<Fruit> banana = [];
   List<Fruit> watermelon = [];
   List<Fruit> pear = [];
+  Fruit fruitToBeReplaced;
 
   // Load the fruits of a date.
   Future<void> refresh(DateTime currentDate) async {
@@ -95,6 +97,17 @@ class FruitModel extends ChangeNotifier {
     return DatabaseQuery.db
         .deleteFruit(fruit)
         .then((value) => notifyListeners());
+  }
+
+  Future replaceFruit(SubNameFruit newFruitDetails) async {
+
+     fruitToBeReplaced.name = newFruitDetails.name;
+     fruitToBeReplaced.type = newFruitDetails.type;
+     fruitToBeReplaced.dummyName = newFruitDetails.dummyName;
+     fruitToBeReplaced.dummyType = newFruitDetails.dummyType;
+
+    return await DatabaseQuery.db.updateFruit(
+        fruitToBeReplaced, false);
   }
 
   // Get the orignal reference to a fruit. Useful for binding it to widgets

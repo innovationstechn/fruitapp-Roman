@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Dialog/NameFruitDialog.dart';
-import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
@@ -55,11 +54,11 @@ class _InformationPageState extends State<InformationPage> {
                   if (result == PopupSelection.change) {
                     showDialog(
                             context: context,
-                            builder: (_) => NameFruitDialog.forUpdate(fruit))
+                            builder: (_) {
+                              Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced = fruit;
+                              return NameFruitDialog();
+                            })
                         .then((value) => () {
-                              SubNameFruitDialog.newFruitSelectedForUpdate =
-                                  null;
-                              NameFruitDialog.updated = false;
                               Provider.of<FruitModel>(context, listen: false)
                                   .refresh(Provider.of<DayModel>(context,
                                           listen: false)

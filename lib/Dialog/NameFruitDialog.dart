@@ -1,52 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Card/GridCard.dart';
-import 'package:fruitapp/assets.dart';
+import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/models/name_fruit_diialog_model.dart';
-
+import 'package:fruitapp/models/sub_name_fruit_diialog_model.dart';
+import 'package:fruitapp/widgets/item_grid_mixin.dart';
 import 'package:provider/provider.dart';
-import '../Fruit.dart';
+import 'SubCategoryFruitDialog.dart';
 
 class NameFruitDialog extends StatefulWidget {
-  static String date;
-  static bool updated = false;
-  static Fruit previousFruit;
 
-  NameFruitDialog(String date) {
-    NameFruitDialog.date = date;
-  }
-
-  NameFruitDialog.forUpdate(Fruit fruit) {
-    updated = true;
-    previousFruit = fruit;
-  }
+  NameFruitDialog();
 
   @override
   _nameFruitDialog createState() => _nameFruitDialog();
 }
 
-class _nameFruitDialog extends State<NameFruitDialog> {
+class _nameFruitDialog extends State<NameFruitDialog> with ItemGridMixin {
   double dialogHorizontalWidth = 24;
-
-  Widget gridViewBuilder(List<GridCard> list) {
-    return GridView.builder(
-      itemCount: list.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: (1 / 1.3),
-      ),
-      itemBuilder: (
-        context,
-        index,
-      ) {
-        return GestureDetector(
-            onTap: () {
-              // Navigator.of(context).pushNamed(RouteName.GridViewCustom);
-            },
-            child: list[index]);
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +56,28 @@ class _nameFruitDialog extends State<NameFruitDialog> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.68,
               child: Container(
-                  color: Colors.white, child: gridViewBuilder(data.list)),
+                  color: Colors.white,
+                  child: gridViewBuilder(data.list, (index) async {
+
+                    Provider.of<SubNameFruitModel>(context, listen: false)
+                        .refresh();
+
+                    await showDialog(
+                        context: context,
+                        builder: (_) => Consumer<SubNameFruitModel>(
+                                builder: (context, list, child) {
+                              return SubNameFruitDialog(
+                                  list: Provider.of<SubNameFruitModel>(context,
+                                          listen: false)
+                                      .searchByName(
+                                          data.list[index].nameFruit.name));
+                            })).then((value) => {
+                          Provider.of<FruitModel>(context, listen: false)
+                              .refresh(
+                                  Provider.of<DayModel>(context, listen: false)
+                                      .currentDate)
+                        });
+                  }, null)),
             ),
             Align(
               alignment: Alignment.topRight,
@@ -103,6 +95,6 @@ class _nameFruitDialog extends State<NameFruitDialog> {
               ),
             )
           ]);
-        })); // Diloag ending
+        }));
   }
 }

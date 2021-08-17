@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
+import 'package:fruitapp/Dialog/NameFruitDialog.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/models/name_fruit_diialog_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
-import 'package:fruitapp/widgets/category_dialog/category_dialog.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
@@ -149,17 +148,15 @@ class DayPage extends StatelessWidget {
               builder: (context) {
                 // Open up a dialog box with the current date as it's arguments
                 // Current date is required for inserting data into the database.
-                DateTime currentDate =
-                    Provider.of<DayModel>(context).currentDate;
+                Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced = null;
 
-                // return NameFruitDialog(
-                //     "${currentDate.day}/${currentDate.month}/${currentDate.year}");
-                return CategoryDialog();
+                return NameFruitDialog();
+
               }).then((value) => {
                 // After the dialog has been dismissed, clear the list of all
                 // selected fruits selected in the dialog.
-                SubNameFruitDialog.selectedList.clear(),
-                // In case the user added any fruits, refresh the current
+
+                // // In case the user added any fruits, refresh the current
                 // page's fruit lists.
                 Provider.of<FruitModel>(context, listen: false).refresh(
                     Provider.of<DayModel>(context, listen: false).currentDate)

@@ -72,7 +72,7 @@ class DatabaseQuery {
  Future newNameFruitDialog(NameFruit nameFruit) async {
     final db = await database;
     try {
-      // Query for inserting MLKG
+      // Query for inserting NameFruit
       var res = await db.insert("NameFruitDialog", nameFruit.toMap());
       return;
       Fluttertoast.showToast(msg: "Added");
@@ -88,7 +88,7 @@ Future<bool> updateNameFruitDialog(NameFruit nameFruit, String oldFruitName) asy
 
     final db = await database;
     try {
-      //Query for updating MLKG
+      //Query for updating NameFruit
       var res = await db
           .rawQuery('SELECT * FROM NameFruitDialog WHERE name=?', [nameFruit.name]);
       List<NameFruit> list = res.isNotEmpty ? res.map((c) => NameFruit.fromMap(c)).toList() : [];
@@ -186,8 +186,6 @@ Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) asyn
       Fluttertoast.showToast(msg: "Not Updated");
       return false;
     }
-
-
 
   }
 

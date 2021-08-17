@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:fruitapp/Card/GridCard.dart';
-import 'package:fruitapp/Card/GridDataModel.dart';
+import 'package:fruitapp/Card/SubNameFruitGridCard.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/NameFruit.dart';
 import 'package:fruitapp/assets.dart';
-
+import '../Fruit.dart';
 import '../SubNameFruit.dart';
 
 class SubNameFruitModel extends ChangeNotifier {
-  List<GridCard> list = [];
+  List<GridCardSubNameFruit> list = [];
+  List<SubNameFruit> selectedElementForAddition= [];
 
   // Load the fruits of a date.
 
@@ -21,27 +20,55 @@ class SubNameFruitModel extends ChangeNotifier {
               list.clear(),
               for (int i = 0; i < nameFruitList.length; i++)
                 {
-                  list.add(GridCard(
-                    new GridCardModel(
-                      nameFruitList[i].name,
-                      nameFruitList[i].type,
-                      nameFruitList[i].dummyName,
-                      nameFruitList[i].dummyType,
-                    ),
-                  ))
+                  list.add(GridCardSubNameFruit(nameFruitList[i]))
                 },
               notifyListeners(),
             }
         });
   }
 
-  List<GridCard> searchByName(String name) {
-    List<GridCard> temp = [];
+  List<GridCardSubNameFruit> searchByName(String name) {
+    List<GridCardSubNameFruit> temp = [];
 
     for (int i = 0; i < list.length; i++)
-      if (list[i].gridCardModel.name == name) temp.add(list[i]);
+      if (list[i].subNameFruit.name == name) temp.add(list[i]);
 
     return temp;
+  }
+
+  void addToSelectedList(SubNameFruit subNameFruit){
+    if(this.selectedElementForAddition.contains(subNameFruit))
+      this.selectedElementForAddition.remove(subNameFruit);
+    else
+      this.selectedElementForAddition.add(subNameFruit);
+  }
+
+  Future<String> addSelectedListToDB(String date)async{
+
+    String fruitTypes = "";
+    print("Selected Item: "+selectedElementForAddition.length.toString());
+
+    for (int i = 0; i < selectedElementForAddition.length; i++) {
+      Fruit newFruit = new Fruit(
+          selectedElementForAddition[i].name,
+          selectedElementForAddition[i].type,
+          "",
+          date,
+          null,
+          null,
+          null,
+          details[selectedElementForAddition[i].dummyName]["variants"][
+          selectedElementForAddition[i].dummyType
+              .toLowerCase()],
+          selectedElementForAddition[i].dummyName,
+          selectedElementForAddition[i].dummyType);
+      var result = await DatabaseQuery.db.newFruit(newFruit);
+      if (!result) {
+        fruitTypes = fruitTypes + newFruit.type + "\n";
+      }
+    }
+    return fruitTypes;
+
   }
 
   Future updateSubNameFruit(SubNameFruit nameFruit, String oldName) {

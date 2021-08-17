@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ItemRenameMixin {
+
   Widget getRenameDialog(BuildContext context, Function(String) onUpdateTap) {
     final textEditingController = TextEditingController();
 
@@ -24,7 +25,7 @@ class ItemRenameMixin {
       ),
       actions: [
         TextButton(
-          onPressed: onUpdateTap(textEditingController.text),
+          onPressed: () => onUpdateTap(textEditingController.text),
           child: Text('UPDATE'),
         ),
         TextButton(

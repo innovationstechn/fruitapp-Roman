@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fruitapp/Card/SubNameFruitGridCard.dart';
+import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/models/sub_name_fruit_diialog_model.dart';
 import 'package:fruitapp/widgets/item_grid_mixin.dart';
+import 'package:provider/provider.dart';
 
-import '../Card/GridCard.dart';
-import '../Card/GridDataModel.dart';
-import '../Database/DatabaseHelper.dart';
 import '../Fruit.dart';
-import '../assets.dart';
-import 'NameFruitDialog.dart';
 
 class SubNameFruitDialog extends StatefulWidget {
-  final List<GridCard> list;
-  static List<GridCardModel> selectedList = new List<GridCardModel>();
-  static GridCardModel newFruitSelectedForUpdate;
+  final List<GridCardSubNameFruit> list;
 
   SubNameFruitDialog({this.list});
 
@@ -25,8 +23,9 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
 
   @override
   void initState() {
+    Provider.of<SubNameFruitModel>(context, listen: false)
+        .selectedElementForAddition = [];
     super.initState();
-    SubNameFruitDialog.selectedList.clear();
   }
 
   @override
@@ -47,7 +46,7 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
                     })),
             Center(
               child: Text(
-                widget.list[0].gridCardModel.name,
+                widget.list[0].subNameFruit.name,
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.04),
               ),
@@ -69,7 +68,7 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
           height: MediaQuery.of(context).size.height * 0.68,
           child: Container(
               color: Colors.white,
-              child: gridViewBuilder(widget.list, () {}, () {})),
+              child: gridViewBuilder(widget.list, (index) {}, () {})),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -77,57 +76,42 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
             RaisedButton(
                 color: Colors.red,
                 onPressed: () {
-                  SubNameFruitDialog.selectedList.clear();
                   Navigator.of(context).pop();
                 },
                 child: Text(
                   "Cancel",
                   style: TextStyle(fontSize: 15),
                 )),
-            NameFruitDialog.updated
+               Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced != null
                 ? Container()
                 : Container(
                     margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                     child: RaisedButton(
                         color: Colors.lightGreen,
                         onPressed: () async {
-                          String fruitColors = "";
-                          for (int i = 0;
-                              i < SubNameFruitDialog.selectedList.length;
-                              i++) {
-                            print(SubNameFruitDialog.selectedList[i].type);
+                          DateTime currentDate =
+                              Provider.of<DayModel>(context, listen: false)
+                                  .currentDate;
 
-                            Fruit newFruit = new Fruit(
-                                SubNameFruitDialog.selectedList[i].name,
-                                SubNameFruitDialog.selectedList[i].type,
-                                "",
-                                NameFruitDialog.date,
-                                null,
-                                null,
-                                null,
-                                details[SubNameFruitDialog
-                                        .selectedList[i].dummyName]["variants"][
-                                    SubNameFruitDialog.selectedList[i].dummyType
-                                        .toLowerCase()],
-                                SubNameFruitDialog.selectedList[i].dummyName,
-                                SubNameFruitDialog.selectedList[i].dummyType);
-                            var result =
-                                await DatabaseQuery.db.newFruit(newFruit);
-                            if (!result) {
-                              fruitColors = fruitColors + newFruit.type + "\n";
-                            }
-                          }
+                          String fruitTypesRejected = await Provider.of<
+                                  SubNameFruitModel>(context, listen: false)
+                              .addSelectedListToDB(
+                                  "${currentDate.day}/${currentDate.month}/${currentDate.year}");
 
-                          if (fruitColors != "") {
+                          if (fruitTypesRejected != "") {
                             final result = await showDialog(
                                 context: context,
                                 builder: (_) => Dialog(
                                         child: Column(
                                       children: [
                                         Text("Following types already exists:"),
-                                        Text(fruitColors),
+                                        Text(fruitTypesRejected),
                                         RaisedButton(
                                           onPressed: () {
+                                            Provider.of<SubNameFruitModel>(
+                                                    context,
+                                                    listen: false)
+                                                .selectedElementForAddition = [];
                                             Navigator.of(context).pop();
                                           },
                                           child: Text("Ok"),
