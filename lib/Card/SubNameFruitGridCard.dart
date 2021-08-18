@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/fruit_model.dart';
-import 'package:fruitapp/models/sub_name_fruit_diialog_model.dart';
+import 'package:fruitapp/models/sub_name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_rename_mixin.dart';
 import 'package:provider/provider.dart';
 import '../SubNameFruit.dart';
@@ -27,8 +27,7 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
 
               SubNameFruit nameFruit = new SubNameFruit(
                   name: widget.subNameFruit.name,
-                  dummyName: widget.subNameFruit.dummyName,
-                  dummyType: widget.subNameFruit.dummyType,
+                  imageSource: widget.subNameFruit.imageSource,
                   type: updatedType);
 
               var result =
@@ -94,13 +93,7 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  basePath +
-                      widget.subNameFruit.dummyName +
-                      "/" +
-                      details[widget.subNameFruit.dummyName]["variants"]
-                          [widget.subNameFruit.dummyType] +
-                      ".gif",
+                Image.asset(widget.subNameFruit.imageSource,
                   height: 130,
                   width: 100,
                   fit: BoxFit.fill,
@@ -118,5 +111,5 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
             )),
       ),
     );
-  } //Sizedbox,
+  }
 }

@@ -85,9 +85,7 @@ class _DetailPageState extends State<DetailPage> {
                               children: [
                                 // Image.asset(fruit.gif),
                                 // Image paths are stored in assets.dart.
-                                Image.asset(basePath + fruit.dummyName.toLowerCase()+ "/"+
-                                    details[fruit.dummyName.toLowerCase()]['variants'][fruit.dummyType.toLowerCase()] +
-                                    ".gif"),
+                                Image.asset(fruit.imageSource),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -131,11 +129,12 @@ class _DetailPageState extends State<DetailPage> {
                                                   // at 2 lines.
                                                   Text(
                                                 // Description is static and stored in assets.dart
-                                                details[snapshot.data.dummyName
-                                                            .toLowerCase()]
-                                                        ["description"][
-                                                    snapshot.data.dummyType
-                                                        .toLowerCase()],
+                                                // details[snapshot.data.dummyName
+                                                //             .toLowerCase()]
+                                                //         ["description"][
+                                                //     snapshot.data.dummyType
+                                                //         .toLowerCase()],
+                                                "Description",
                                                 softWrap: true,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
@@ -159,12 +158,15 @@ class _DetailPageState extends State<DetailPage> {
                                                       vertical: 2),
 
                                               // Description is static and stored in assets.dart
-                                              child: Text(details[snapshot
-                                                          .data.dummyName
-                                                          .toLowerCase()]
-                                                      ["description"][
-                                                  snapshot.data.dummyType
-                                                      .toLowerCase()]),
+                                              child: Text(
+                                                "Description",
+                                                // details[snapshot
+                                                //         .data.dummyName
+                                                //         .toLowerCase()]
+                                                //     ["description"][
+                                                // snapshot.data.dummyType
+                                                //     .toLowerCase()]
+                                              ),
                                             ),
                                             ExpandableButton(
                                               child:

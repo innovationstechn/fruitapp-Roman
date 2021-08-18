@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Dialog/NameFruitDialog.dart';
-import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
-import 'package:fruitapp/assets.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
-import 'package:fruitapp/models/sub_name_fruit_diialog_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +26,6 @@ class ViewPageItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     commentController.text = fruit.comment == null ? "" : fruit.comment;
 
-    print("Fruit Name:"+fruit.name);
-    print("ImagePath : "+fruit.gif);
-    print("Fruit Type:"+fruit.type);
-    print("Fruit dymmyType:"+fruit.dummyType);
-
     return Card(
       child: Column(
         children: [
@@ -51,11 +43,7 @@ class ViewPageItemWidget extends StatelessWidget {
                       // together paths present in the assets page.
 
 
-                      child: Image.asset(basePath +
-                          fruit.dummyName.toLowerCase() +
-                          "/" +
-                          fruit.gif +
-                          ".gif"),
+                      child: Image.asset(fruit.imageSource),
                     ),
                   ),
                   flex: 2,

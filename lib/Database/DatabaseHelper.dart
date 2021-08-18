@@ -27,9 +27,6 @@ class DatabaseQuery {
 
       await db.execute("CREATE TABLE  NameFruitDialog("
           "name TEXT PRIMARY KEY,"
-          "dummyName TEXT,"
-          "font INTEGER,"
-          "color TEXT,"
           "imageSource TEXT"
           ")");
 
@@ -37,9 +34,8 @@ class DatabaseQuery {
       await db.execute("CREATE TABLE SubCategoryFruitDialog ("
           "name TEXT,"
           "type TEXT,"
-          "dummyName TEXT,"
-          "dummyType TEXT"
-        ")");
+          "imageSource TEXT"
+          ")");
 
 
       // Creating table and making date as a primary key
@@ -50,8 +46,7 @@ class DatabaseQuery {
           "gifPath TEXT,"
           "date TEXT,"
           "time TEXT,"
-          "dummyName TEXT,"
-          "dummyType TEXT,"
+          "imageSource TEXT,"
           "categorySize,"
           "id INTEGER PRIMARY KEY"
           ")");

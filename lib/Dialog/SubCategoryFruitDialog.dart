@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/Card/SubNameFruitGridCard.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
-import 'package:fruitapp/models/sub_name_fruit_diialog_model.dart';
+import 'package:fruitapp/models/sub_name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_grid_mixin.dart';
 import 'package:provider/provider.dart';
 

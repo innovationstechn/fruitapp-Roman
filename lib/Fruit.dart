@@ -1,13 +1,13 @@
 import 'MLKG.dart';
 
 class Fruit {
-  String name, type, comment, date, gif,dummyName,dummyType;
+  String name, type, comment, date, gif,imageSource;
   int id;
   String time, categorySize;
   List<MLKG> mlkg = [];
 
   Fruit(this.name, this.type, this.comment, this.date, this.id, this.time,
-      this.categorySize, this.gif,this.dummyName,this.dummyType);
+      this.categorySize, this.gif,this.imageSource);
 
   // Conversion from json to Fruit object
   factory Fruit.fromMap(Map<String, dynamic> json) => new Fruit(
@@ -19,8 +19,7 @@ class Fruit {
       json["time"],
       json["categorySize"],
       json["gifPath"],
-      json["dummyName"],
-      json["dummyType"],
+      json["imageSource"],
   );
   // Mapping Fruit for database.
   Map<String, dynamic> toMap() => {
@@ -29,8 +28,7 @@ class Fruit {
         "comment": comment,
         "date": date,
         "gifPath": gif,
-        "dummyName": dummyName,
-        "dummyType": dummyType,
+        "imageSource": imageSource,
     if (time == null) "time": "00:00:00" else "time": time,
         if (categorySize != null)
           "categorySize": categorySize

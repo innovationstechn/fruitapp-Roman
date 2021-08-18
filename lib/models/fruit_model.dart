@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/Dialog/NameFruitDialog.dart';
 import 'package:fruitapp/SubNameFruit.dart';
 import '../Fruit.dart';
 import '../MLKG.dart';
@@ -103,8 +102,7 @@ class FruitModel extends ChangeNotifier {
 
      fruitToBeReplaced.name = newFruitDetails.name;
      fruitToBeReplaced.type = newFruitDetails.type;
-     fruitToBeReplaced.dummyName = newFruitDetails.dummyName;
-     fruitToBeReplaced.dummyType = newFruitDetails.dummyType;
+     fruitToBeReplaced.imageSource = newFruitDetails.imageSource;
 
     return await DatabaseQuery.db.updateFruit(
         fruitToBeReplaced, false);

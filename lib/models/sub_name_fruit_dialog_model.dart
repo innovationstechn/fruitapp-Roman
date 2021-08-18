@@ -57,11 +57,8 @@ class SubNameFruitModel extends ChangeNotifier {
           null,
           null,
           null,
-          details[selectedElementForAddition[i].dummyName]["variants"][
-          selectedElementForAddition[i].dummyType
-              .toLowerCase()],
-          selectedElementForAddition[i].dummyName,
-          selectedElementForAddition[i].dummyType);
+          selectedElementForAddition[i].imageSource,
+          selectedElementForAddition[i].imageSource,);
       var result = await DatabaseQuery.db.newFruit(newFruit);
       if (!result) {
         fruitTypes = fruitTypes + newFruit.type + "\n";

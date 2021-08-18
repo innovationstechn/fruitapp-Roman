@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fruitapp/models/fruit_model.dart';
-import 'package:fruitapp/models/name_fruit_diialog_model.dart';
+import 'package:fruitapp/models/name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_fruit_name_decoration.dart';
 import 'package:fruitapp/widgets/item_rename_mixin.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +23,6 @@ class _NameFruitCardState extends State<GridCardNameFruit>
         builder: (context) => getRenameDialog(context, (String updatedName) {
               NameFruit nameFruit = new NameFruit(
                   name: updatedName,
-                  dummyName: widget.nameFruit.dummyName,
                   imageSource: widget.nameFruit.imageSource);
 
               // Call Update Method and Refresh For Category Grid Dialog
@@ -65,7 +63,6 @@ class _NameFruitCardState extends State<GridCardNameFruit>
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.combine([]))),
                       onDoubleTap: () async {
-                        // if(Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced == null)
                         await onUpdate(context);
                       },
                     ),
