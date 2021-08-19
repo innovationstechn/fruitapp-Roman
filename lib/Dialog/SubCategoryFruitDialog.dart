@@ -7,8 +7,6 @@ import 'package:fruitapp/models/sub_name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_grid_mixin.dart';
 import 'package:provider/provider.dart';
 
-import '../Fruit.dart';
-
 class SubNameFruitDialog extends StatefulWidget {
   final List<GridCardSubNameFruit> list;
 

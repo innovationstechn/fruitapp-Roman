@@ -51,61 +51,19 @@ class DayPage extends StatelessWidget {
                               // 2. shrinkWrap: true guards against infinite
                               // height
 
-                              // Display the apples that have been stored for
+                              // Display the fruits that have been stored for
                               // the current page.
                               ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: fruitData.apple.length,
+                                  itemCount: fruitData.fetchedList.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                       padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
                                       child: ViewPageItemWidget(
-                                          fruit: fruitData.apple[index]),
+                                          fruit: fruitData.fetchedList[index]),
                                     );
                                   }),
-
-                              // Display the pears that have been stored for
-                              // the current page.
-                              ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: fruitData.pear.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                      child: ViewPageItemWidget(
-                                          fruit: fruitData.pear[index]),
-                                    );
-                                  }),
-
-                              // Display the watermelons that have been stored for
-                              // the current page.
-                              ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: fruitData.watermelon.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                      child: ViewPageItemWidget(
-                                          fruit: fruitData.watermelon[index]),
-                                    );
-                                  }),
-
-                              // Display the bananas that have been stored for
-                              // the current page.
-                              ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: fruitData.banana.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                      child: ViewPageItemWidget(
-                                          fruit: fruitData.banana[index]),
-                                    );
-                                  })
                             ],
                           );
                         },
@@ -147,15 +105,12 @@ class DayPage extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) {
-                // Open up a dialog box with the current date as it's arguments
-                // Current date is required for inserting data into the database.
+
                 Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced = null;
 
                 return NameFruitDialog();
 
               }).then((value) => {
-                // After the dialog has been dismissed, clear the list of all
-                // selected fruits selected in the dialog.
 
                 // // In case the user added any fruits, refresh the current
                 // page's fruit lists.

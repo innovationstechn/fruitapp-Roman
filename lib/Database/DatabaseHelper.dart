@@ -346,35 +346,6 @@ Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) asyn
   // ************************** Get All Fruits ************************ //
 
 // Fetching Fruits from database
-  Future<List<Fruit>> getAllFruits(String name, String date) async {
-    final db = await database;
-    var res = await db
-        .rawQuery('SELECT * FROM Fruit WHERE name=? AND date=?', [name, date]);
-
-    //Fetching records from database and convert into Fruit type objects
-    List<Fruit> list =
-        res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
-
-    var weight;
-    //Fetching MLKG for each Fruit
-    for (int i = 0; i < list.length; i++) {
-      print("Fid:" + list[i].id.toString());
-
-      weight =
-          await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
-      // print("List return:"+weight.length.toString());
-      for (var item in weight) {
-        list[i].mlkg.add(new MLKG.fromMap(item));
-      }
-
-      print("Fid:" +
-          list[i].id.toString() +
-          "  Mlkg : " +
-          list[i].mlkg.length.toString());
-    }
-    return list;
-  }
-
   Future<List<Fruit>> getFruitsByDate(String date) async {
     final db = await database;
     var res = await db
