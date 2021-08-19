@@ -21,7 +21,6 @@ class _nameFruitDialog extends State<NameFruitDialog> with ItemGridMixin {
 
   @override
   Widget build(BuildContext context) {
-    // print("List Length" + widget.list.length.toString());
     return Dialog(
         insetPadding: EdgeInsets.symmetric(
             horizontal: dialogHorizontalWidth, vertical: 24.0),

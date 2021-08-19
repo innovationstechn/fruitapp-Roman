@@ -108,7 +108,7 @@ class FruitModel extends ChangeNotifier {
         fruitToBeReplaced, false);
   }
 
-  // Get the orignal reference to a fruit. Useful for binding it to widgets
+  // Get the original reference to a fruit. Useful for binding it to widgets
   // when you are updating values.
   Fruit getReference(Fruit copy) {
     return apple.firstWhere((element) => (element.id == copy.id),

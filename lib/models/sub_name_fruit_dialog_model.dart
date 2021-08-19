@@ -9,10 +9,8 @@ class SubNameFruitModel extends ChangeNotifier {
   List<GridCardSubNameFruit> list = [];
   List<SubNameFruit> selectedElementForAddition= [];
 
-  // Load the fruits of a date.
 
   Future refresh() async {
-    List<String> fruitNames = ["apple", "banana", "pear", "watermelon"];
 
     await DatabaseQuery.db.getSubNameFruitDialog().then((nameFruitList) => {
           if (nameFruitList.isNotEmpty)

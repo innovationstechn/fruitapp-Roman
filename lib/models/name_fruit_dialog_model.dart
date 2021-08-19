@@ -7,7 +7,7 @@ import 'package:fruitapp/NameFruit.dart';
 class NameFruitModel extends ChangeNotifier {
   // Load the fruits of a date.
 
-  List<GridCardNameFruit> list = [];
+  List<NameFruitGridCard> list = [];
 
   Future refresh() async {
     await DatabaseQuery.db
@@ -15,7 +15,7 @@ class NameFruitModel extends ChangeNotifier {
         .then((nameFruitList) => {
               list.clear(),
               for (int i = 0; i < nameFruitList.length; i++){
-                  list.add(new GridCardNameFruit(nameFruitList[i])),
+                  list.add(new NameFruitGridCard(nameFruitList[i])),
                 },
             })
         .then((value) => notifyListeners());

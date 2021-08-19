@@ -34,7 +34,6 @@ class InitializeModel extends ChangeNotifier {
                                   basePath + details[fruitNames[i]]["image"]))
                           .then((value) async => {
                                 await insertIntoSubName(fruitNames[i])
-                                    .then((value)),
                               }),
                     },
                 },

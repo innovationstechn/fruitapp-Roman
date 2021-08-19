@@ -1,22 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/name_fruit_dialog_model.dart';
-import 'package:fruitapp/widgets/item_fruit_name_decoration.dart';
 import 'package:fruitapp/widgets/item_rename_mixin.dart';
 import 'package:provider/provider.dart';
 import '../NameFruit.dart';
 
-class GridCardNameFruit extends StatefulWidget {
+class NameFruitGridCard extends StatefulWidget {
   final NameFruit nameFruit;
+  final fontSize = 20.0;
+  final color = Colors.black;
+  final fontWeight = FontWeight.bold;
 
-  GridCardNameFruit(this.nameFruit);
+  NameFruitGridCard(this.nameFruit);
 
   @override
   _NameFruitCardState createState() => _NameFruitCardState();
 }
 
-class _NameFruitCardState extends State<GridCardNameFruit>
-    with ItemRenameMixin, NameDecoration {
+class _NameFruitCardState extends State<NameFruitGridCard>
+    with ItemRenameMixin{
   Future<void> onUpdate(BuildContext context) async {
     await showDialog(
         context: context,
@@ -25,7 +27,6 @@ class _NameFruitCardState extends State<GridCardNameFruit>
                   name: updatedName,
                   imageSource: widget.nameFruit.imageSource);
 
-              // Call Update Method and Refresh For Category Grid Dialog
 
               var result = Provider.of<NameFruitModel>(context, listen: false)
                   .updateNameFruit(nameFruit, widget.nameFruit.name)
@@ -58,19 +59,14 @@ class _NameFruitCardState extends State<GridCardNameFruit>
                     GestureDetector(
                       child: Text(widget.nameFruit.name,
                           style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontSize: widget.fontSize,
+                              color: widget.color,
+                              fontWeight: widget.fontWeight,
                               decoration: TextDecoration.combine([]))),
                       onDoubleTap: () async {
                         await onUpdate(context);
                       },
                     ),
-                   IconButton(onPressed: (){
-                       showDialog(context: context,
-                           builder:(_) => getDecorationDialog(context,widget.nameFruit));
-
-                   }, icon: Icon(Icons.edit))
                   ],
                 ),
               ]),
