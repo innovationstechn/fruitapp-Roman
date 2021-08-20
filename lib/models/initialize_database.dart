@@ -32,9 +32,6 @@ class InitializeModel extends ChangeNotifier {
                               name: fruitNames[i],
                               imageSource:
                                   basePath + details[fruitNames[i]]["image"]))
-                          .then((value) async => {
-                                await insertIntoSubName(fruitNames[i])
-                              }),
                     },
                 },
             })
@@ -43,10 +40,11 @@ class InitializeModel extends ChangeNotifier {
     });
   }
 
-  Future insertIntoSubName(String name) async {
+  Future insertIntoSubName(int id,String name) async {
+    print("Fruit Id"+id.toString());
     for (int i = 0; i < colours.length; i++) {
       await addSubNameFruit(SubNameFruit(
-          name: name,
+          nameFruitId: id,
           type: colours[i],
           imageSource: basePath +
               name.toLowerCase() +
@@ -60,7 +58,9 @@ class InitializeModel extends ChangeNotifier {
     return DatabaseQuery.db.newSubNameFruitDialog(subNameFruit).then((_) {});
   }
 
-  Future addNameFruit(NameFruit nameFruit) {
-    return DatabaseQuery.db.newNameFruitDialog(nameFruit).then((_) {});
+  Future addNameFruit(NameFruit nameFruit) async {
+    await DatabaseQuery.db.newNameFruitDialog(nameFruit).then((value) async {
+      await insertIntoSubName(value,nameFruit.name);
+    });
   }
 }

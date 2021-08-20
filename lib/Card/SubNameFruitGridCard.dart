@@ -26,16 +26,17 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
         builder: (context) => getRenameDialog(context, (String updatedType) {
 
               SubNameFruit nameFruit = new SubNameFruit(
-                  name: widget.subNameFruit.name,
+                  id:widget.subNameFruit.id,
+                  nameFruitId: widget.subNameFruit.nameFruitId,
                   imageSource: widget.subNameFruit.imageSource,
                   type: updatedType);
 
               var result =
                   Provider.of<SubNameFruitModel>(context, listen: false)
-                      .updateSubNameFruit(nameFruit, widget.subNameFruit.type)
+                      .updateSubNameFruit(nameFruit)
                       .then((value) {
                 Provider.of<SubNameFruitModel>(context, listen: false)
-                    .refresh();
+                    .searchById(widget.subNameFruit.nameFruitId);
 
                 Navigator.of(context).pop();
               });

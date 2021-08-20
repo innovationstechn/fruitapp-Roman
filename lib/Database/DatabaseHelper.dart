@@ -24,77 +24,73 @@ class DatabaseQuery {
     // Creating database
     return openDatabase(join(await getDatabasesPath(), "TestDB.db"), version: 1,
         onCreate: (Database db, int version) async {
-
-      await db.execute("CREATE TABLE  NameFruitDialog("
-          "name TEXT PRIMARY KEY,"
+      await db.execute("CREATE TABLE NameFruitDialog("
+          "id INTEGER PRIMARY KEY,"
+          "name TEXT,"
           "imageSource TEXT"
           ")");
 
       // name is the foreign key of NameFruitDialog
       await db.execute("CREATE TABLE SubCategoryFruitDialog ("
-          "name TEXT,"
+          "id INTEGER PRIMARY KEY,"
+          "nameFruitId INTEGER,"
           "type TEXT,"
           "imageSource TEXT"
           ")");
 
-
       // Creating table and making date as a primary key
       await db.execute("CREATE TABLE Fruit ("
-          "name TEXT,"
-          "type TEXT,"
+          "id INTEGER PRIMARY KEY,"
+          "subCategoryId INTEGER,"
           "comment TEXT,"
-          "gifPath TEXT,"
           "date TEXT,"
           "time TEXT,"
-          "imageSource TEXT,"
-          "categorySize,"
-          "id INTEGER PRIMARY KEY"
+          "categorySize"
           ")");
 
       await db.execute("CREATE TABLE MLKG ("
+          "id INTEGER PRIMARY KEY,"
+          "fid INTEGER,"
           "ml TEXT,"
           "kg TEXT,"
-          "comment TEXT,"
-          "fid INTEGER,"
-          "id INTEGER PRIMARY KEY"
+          "comment TEXT"
           ")");
     });
   }
 
-
   //**** Name Fruit Dialog Database **********************//
 
- Future newNameFruitDialog(NameFruit nameFruit) async {
+  Future<int> newNameFruitDialog(NameFruit nameFruit) async {
     final db = await database;
     try {
       // Query for inserting NameFruit
       var res = await db.insert("NameFruitDialog", nameFruit.toMap());
-      return;
-      Fluttertoast.showToast(msg: "Added");
+      return res;
+
     } on DatabaseException {
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "Already Exists in your List");
+      return -1;
     }
-    return;
+
   }
 
   //Updating NameFruit in the database using name
-Future<bool> updateNameFruitDialog(NameFruit nameFruit, String oldFruitName) async {
-
+  Future<bool> updateNameFruitDialog(NameFruit nameFruit) async {
     final db = await database;
     try {
       //Query for updating NameFruit
-      var res = await db
-          .rawQuery('SELECT * FROM NameFruitDialog WHERE name=?', [nameFruit.name]);
-      List<NameFruit> list = res.isNotEmpty ? res.map((c) => NameFruit.fromMap(c)).toList() : [];
-      if(list.isEmpty){
-        var res = await db
-            .update("NameFruitDialog", nameFruit.toMap(), where: "name = ?", whereArgs: [oldFruitName]);
-            Fluttertoast.showToast(msg: "Added");
-            return true;
+      var res = await db.rawQuery(
+          'SELECT * FROM NameFruitDialog WHERE name=?', [nameFruit.name]);
+      List<NameFruit> list =
+          res.isNotEmpty ? res.map((c) => NameFruit.fromMap(c)).toList() : [];
+      if (list.isEmpty) {
+        var res = await db.update("NameFruitDialog", nameFruit.toMap(),
+            where: "id = ?", whereArgs: [nameFruit.id]);
+        Fluttertoast.showToast(msg: "Added");
+        return true;
       }
       return false;
-      // if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
     } on DatabaseException {
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "This name already exists");
@@ -102,20 +98,18 @@ Future<bool> updateNameFruitDialog(NameFruit nameFruit, String oldFruitName) asy
     }
   }
 
-
-  Future<List<NameFruit>>  getNameFruitDialog() async {
+  Future<List<NameFruit>> getNameFruitDialog() async {
     final db = await database;
     try {
       var res = await db.rawQuery('SELECT * FROM NameFruitDialog');
-      List<NameFruit> list = res.isNotEmpty ? res.map((c) => NameFruit.fromMap(c)).toList() : [];
+      List<NameFruit> list =
+          res.isNotEmpty ? res.map((c) => NameFruit.fromMap(c)).toList() : [];
       return list;
-    } on DatabaseException{
+    } on DatabaseException {
       Fluttertoast.showToast(msg: StackTrace.current.toString());
     }
     return [];
   }
-
-
 
   // ********* SubFruitDialog Database **************//
 
@@ -132,75 +126,69 @@ Future<bool> updateNameFruitDialog(NameFruit nameFruit, String oldFruitName) asy
   }
 
   //Updating NameFruit in the database using name
-Future<bool>  updateTypeOfSubNameFruitDialog(SubNameFruit subNameFruit, String oldType) async {
-
+  Future<bool> updateTypeOfSubNameFruitDialog(
+      SubNameFruit subNameFruit) async {
     final db = await database;
 
-    var res = await db
-        .rawQuery('SELECT * FROM SubCategoryFruitDialog WHERE name=? AND type=?', [subNameFruit.name, subNameFruit.type]);
+    var res = await db.rawQuery(
+        'SELECT * FROM SubCategoryFruitDialog WHERE nameFruitId=? AND type=?',
+        [subNameFruit.nameFruitId, subNameFruit.type]);
 
-    List<SubNameFruit> list = res.isNotEmpty ? res.map((c) => SubNameFruit.fromMap(c)).toList() : [];
+    List<SubNameFruit> list =
+        res.isNotEmpty ? res.map((c) => SubNameFruit.fromMap(c)).toList() : [];
 
-    if(list.isEmpty){
+    if (list.isEmpty) {
       try {
-        //Query for updating MLKG
-        var res = await db
-            .update("SubCategoryFruitDialog", subNameFruit.toMap(), where: "name= ? AND type = ?", whereArgs: [subNameFruit.name,oldType]);
-          return true;
-        // if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
+        var res = await db.update(
+            "SubCategoryFruitDialog", subNameFruit.toMap(),
+            where: "id= ?", whereArgs: [subNameFruit.id]);
+        return true;
       } on DatabaseException {
         // If exception is thrown by database
         Fluttertoast.showToast(msg: StackTrace.current.toString());
         return false;
       }
-
-    }
-    else{
+    } else {
       // Type Already Exist with this name
       return false;
     }
-
   }
 
-  //Updating NameFruit in the database using name
-Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) async {
-
-    final db = await database;
-    Map<String, dynamic> row = {
-      "name" : newName,
-    };
-    try {
-      //Query for updating Fruit
-      var res = await db.update("SubCategoryFruitDialog", row,
-          where: "name = ?", whereArgs: [oldName]);
-      // Fluttertoast.showToast(msg: "Updated SubName Successfully");
-      return true;
-    } on DatabaseException {
-      print(StackTrace.current.toString());
-      // If exception is thrown by database
-      Fluttertoast.showToast(msg: "Not Updated");
-      return false;
-    }
-
-  }
-
-
-
-  //get SubNameFruit in the database using name
-  Future<List<SubNameFruit>>  getSubNameFruitDialog() async {
+  // //get SubNameFruit in the database using name
+  Future<List<SubNameFruit>> getSubNameFruitDialog(int id) async {
     final db = await database;
     try {
-      var res = await db.rawQuery('SELECT * FROM SubCategoryFruitDialog');
-      List<SubNameFruit> list = res.isNotEmpty ? res.map((c) => SubNameFruit.fromMap(c)).toList() : [];
+
+      var res = await db.rawQuery(
+          'Select * from SubCategoryFruitDialog where nameFruitId=?',
+          [id]);
+
+
+      List<SubNameFruit> list = res.isNotEmpty
+          ? res.map((c) => SubNameFruit.fromMap(c)).toList()
+          : [];
+
+      var response = await db.rawQuery(
+          'Select * from NameFruitDialog where id=?',
+          [id]);
+
+
+      List<NameFruit> nameList = response.isNotEmpty
+          ? response.map((c) => NameFruit.fromMap(c)).toList()
+          : [];
+
+
+      for(var index=0;index<list.length;index++){
+        list[index].nameFruitId = nameList[0].id;
+        list[index].name = nameList[0].name;
+      }
+
       return list;
-    } on DatabaseException{
+    } on DatabaseException {
       Fluttertoast.showToast(msg: StackTrace.current.toString());
     }
     return [];
   }
-
-
-
 
   //*********************************** MLKG Database ******************************//
 
@@ -249,13 +237,12 @@ Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) asyn
 
   // Inserting new Fruit into the database
   Future<bool> newFruit(Fruit newFruit) async {
-    print('newFruit : ' + newFruit.date);
 
     final db = await database;
     try {
       var checkFruitInDatabase = await db.rawQuery(
-          'Select * from Fruit where name=? AND type=? AND date=?',
-          [newFruit.name, newFruit.type, newFruit.date]);
+          'Select * from Fruit where subCategoryId=? AND date=?',
+          [newFruit.subCategoryId, newFruit.date]);
       if (checkFruitInDatabase.isEmpty) {
         // Query for inserting Fruit
         var res = await db.insert("Fruit", newFruit.toMap());
@@ -269,60 +256,18 @@ Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) asyn
   }
 
   //Updating Fruit in the database using date
-  updateFruit(Fruit newFruit, bool toastOption) async {
+  updateFruit(Fruit newFruit) async {
     final db = await database;
     try {
       //Query for updating Fruit
       var res = await db.update("Fruit", newFruit.toMap(),
           where: "id = ?", whereArgs: [newFruit.id]);
-      if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
     } on DatabaseException {
       print(StackTrace.current.toString());
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "Not Updated");
     }
   }
-
- // Updating Fruit by name
-
-  updateFruitByName(String oldName,String newName) async {
-    final db = await database;
-    Map<String, dynamic> row = {
-      "name" : newName,
-    };
-    try {
-      //Query for updating Fruit
-      var res = await db.update("Fruit", row,
-          where: "name = ?", whereArgs: [oldName]);
-    } on DatabaseException {
-      print(StackTrace.current.toString());
-      // If exception is thrown by database
-      Fluttertoast.showToast(msg: "Not Updated");
-    }
-  }
-
-
- Future<bool> updateFruitByType(SubNameFruit nameFruit,String oldType) async {
-    final db = await database;
-    Map<String, dynamic> row = {
-      "type" : nameFruit.type
-    };
-    try {
-      //Query for updating Fruit
-      // var res = await db
-      //     .rawQuery('SELECT * FROM Fruit WHERE name=? AND type=?', [nameFruit.name, oldType]);
-      var res = await db.update("Fruit", row,
-          where: "name=? AND type = ?", whereArgs: [nameFruit.name,oldType]);
-      return true;
-    } on DatabaseException {
-      print(StackTrace.current.toString());
-      // If exception is thrown by database
-      Fluttertoast.showToast(msg: "Not Updated");
-      return false;
-    }
-  }
-
-
 
   //Delete Fruit from database using date.
   Future deleteFruit(Fruit item) async {
@@ -348,34 +293,40 @@ Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) asyn
 // Fetching Fruits from database
   Future<List<Fruit>> getFruitsByDate(String date) async {
     final db = await database;
-    var res = await db
-        .rawQuery('SELECT * FROM Fruit WHERE date=?', [date]);
+    var res = await db.rawQuery('SELECT * FROM Fruit WHERE date=?', [date]);
 
     //Fetching records from database and convert into Fruit type objects
     List<Fruit> list =
-    res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
+        res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
 
     var weight;
     //Fetching MLKG for each Fruit
     for (int i = 0; i < list.length; i++) {
-      print("Fid:" + list[i].id.toString());
 
-      if(list.isNotEmpty) {
-        weight =
-        await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
+      if (list.isNotEmpty) {
+
+        var subNameFruit = await db.rawQuery('SELECT * FROM SubCategoryFruitDialog WHERE id=?', [list[i].subCategoryId]);
+        List<SubNameFruit> subList =  subNameFruit.isNotEmpty ? subNameFruit.map((c) => SubNameFruit.fromMap(c)).toList() : [];
+
+        var nameFruit = await db.rawQuery('SELECT * FROM NameFruitDialog WHERE id=?', [subList[0].nameFruitId]);
+        List<NameFruit> nameFruitList =  nameFruit.isNotEmpty ? nameFruit.map((c) => NameFruit.fromMap(c)).toList() : [];
+
+        print("Name:"+nameFruitList[0].name);
+        list[i].name = nameFruitList[0].name;
+        list[i].type = subList[0].type;
+        list[i].imageSource = subList[0].imageSource;
+
+        weight =  await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
         // print("List return:"+weight.length.toString());
         for (var item in weight) {
           list[i].mlkg.add(new MLKG.fromMap(item));
         }
-
-        print("Fid:" +
-            list[i].id.toString() +
-            "  Mlkg : " +
-            list[i].mlkg.length.toString());
       }
     }
     return list;
   }
+
+
 
 
   // Get all UNIQUE dates that have been inserted into the databse.
@@ -411,6 +362,18 @@ Future<bool> updateNameOfSubNameFruitDialog(String oldName, String newName) asyn
         await db.query("Fruit", where: "id = ?", whereArgs: [id]);
 
     Fruit fetched = Fruit.fromMap(row.first);
+
+    var subNameFruit = await db.rawQuery('SELECT * FROM SubCategoryFruitDialog WHERE id=?', [fetched.subCategoryId]);
+    List<SubNameFruit> subList =  subNameFruit.isNotEmpty ? subNameFruit.map((c) => SubNameFruit.fromMap(c)).toList() : [];
+
+    var nameFruit = await db.rawQuery('SELECT * FROM NameFruitDialog WHERE id=?', [subList[0].nameFruitId]);
+    List<NameFruit> nameFruitList =  nameFruit.isNotEmpty ? nameFruit.map((c) => NameFruit.fromMap(c)).toList() : [];
+
+    print("Name:"+nameFruitList[0].name);
+    fetched.name = nameFruitList[0].name;
+    fetched.type = subList[0].type;
+    fetched.imageSource = subList[0].imageSource;
+
 
     // And then get the MLKGs.
     final List<Map<String, dynamic>> mlkgs =

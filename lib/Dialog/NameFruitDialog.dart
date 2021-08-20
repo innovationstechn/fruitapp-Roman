@@ -58,18 +58,19 @@ class _nameFruitDialog extends State<NameFruitDialog> with ItemGridMixin {
                   color: Colors.white,
                   child: gridViewBuilder(data.list, (index) async {
 
-                    Provider.of<SubNameFruitModel>(context, listen: false)
-                        .refresh();
+                    Provider.of<SubNameFruitModel>(context,
+                        listen: false)
+                        .searchById(
+                        data.list[index].nameFruit.id);
+
 
                     await showDialog(
                         context: context,
                         builder: (_) => Consumer<SubNameFruitModel>(
                                 builder: (context, list, child) {
+
                               return SubNameFruitDialog(
-                                  list: Provider.of<SubNameFruitModel>(context,
-                                          listen: false)
-                                      .searchByName(
-                                          data.list[index].nameFruit.name));
+                                  list: list.list);
                             })).then((value) => {
                           Provider.of<FruitModel>(context, listen: false)
                               .refresh(

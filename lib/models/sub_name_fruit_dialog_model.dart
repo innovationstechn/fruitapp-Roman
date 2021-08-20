@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fruitapp/Card/SubNameFruitGridCard.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/assets.dart';
+import 'package:fruitapp/NameFruit.dart';
 import '../Fruit.dart';
 import '../SubNameFruit.dart';
 
@@ -10,28 +10,22 @@ class SubNameFruitModel extends ChangeNotifier {
   List<SubNameFruit> selectedElementForAddition= [];
 
 
-  Future refresh() async {
+  Future searchById(int nameFruitId) async {
 
-    await DatabaseQuery.db.getSubNameFruitDialog().then((nameFruitList) => {
-          if (nameFruitList.isNotEmpty)
+    print("Id:"+nameFruitId.toString());
+    await DatabaseQuery.db.getSubNameFruitDialog(nameFruitId).then((nameFruitList) => {
+
+
+      if (nameFruitList.isNotEmpty)
+        {
+          list.clear(),
+          for (int i = 0; i < nameFruitList.length; i++)
             {
-              list.clear(),
-              for (int i = 0; i < nameFruitList.length; i++)
-                {
-                  list.add(GridCardSubNameFruit(nameFruitList[i]))
-                },
-              notifyListeners(),
-            }
-        });
-  }
-
-  List<GridCardSubNameFruit> searchByName(String name) {
-    List<GridCardSubNameFruit> temp = [];
-
-    for (int i = 0; i < list.length; i++)
-      if (list[i].subNameFruit.name == name) temp.add(list[i]);
-
-    return temp;
+              list.add(GridCardSubNameFruit(nameFruitList[i]))
+            },
+          notifyListeners(),
+        }
+    });
   }
 
   void addToSelectedList(SubNameFruit subNameFruit){
@@ -48,36 +42,24 @@ class SubNameFruitModel extends ChangeNotifier {
 
     for (int i = 0; i < selectedElementForAddition.length; i++) {
       Fruit newFruit = new Fruit(
-          selectedElementForAddition[i].name,
-          selectedElementForAddition[i].type,
           "",
           date,
           null,
+          selectedElementForAddition[i].id,
           null,
-          null,
-          selectedElementForAddition[i].imageSource,
-          selectedElementForAddition[i].imageSource,);
+          null);
       var result = await DatabaseQuery.db.newFruit(newFruit);
-      if (!result) {
-        fruitTypes = fruitTypes + newFruit.type + "\n";
-      }
     }
     return fruitTypes;
 
   }
 
-  Future updateSubNameFruit(SubNameFruit nameFruit, String oldName) {
+  Future updateSubNameFruit(SubNameFruit nameFruit) {
     return DatabaseQuery.db
-        .updateTypeOfSubNameFruitDialog(nameFruit, oldName)
+        .updateTypeOfSubNameFruitDialog(nameFruit)
         .then((value) async {
       if (value) {
-        await DatabaseQuery.db
-            .updateFruitByType(nameFruit, oldName)
-            .then((value) {
-          if (value) {
-            refresh();
-          }
-        });
+        searchById(nameFruit.id);
       }
     });
   }

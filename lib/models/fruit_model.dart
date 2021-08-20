@@ -18,7 +18,6 @@ class FruitModel extends ChangeNotifier {
     await DatabaseQuery.db.getFruitsByDate("${currentDate.day}/${currentDate.month}/${currentDate.year}").then((nameFruitList) => {
 
       if(nameFruitList.isNotEmpty){
-
         fetchedList = nameFruitList,
         notifyListeners()
       }
@@ -33,7 +32,7 @@ class FruitModel extends ChangeNotifier {
 
   Future updateFruit(Fruit fruit) {
     return DatabaseQuery.db
-        .updateFruit(fruit, false)
+        .updateFruit(fruit)
         .then((_) => notifyListeners());
   }
 
@@ -45,12 +44,10 @@ class FruitModel extends ChangeNotifier {
 
   Future replaceFruit(SubNameFruit newFruitDetails) async {
 
-     fruitToBeReplaced.name = newFruitDetails.name;
-     fruitToBeReplaced.type = newFruitDetails.type;
-     fruitToBeReplaced.imageSource = newFruitDetails.imageSource;
+    fruitToBeReplaced.subCategoryId = newFruitDetails.id;
 
     return await DatabaseQuery.db.updateFruit(
-        fruitToBeReplaced, false);
+        fruitToBeReplaced);
   }
 
   // Read-Update-Delete operations for Fruits

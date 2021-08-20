@@ -44,7 +44,7 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
                     })),
             Center(
               child: Text(
-                widget.list[0].subNameFruit.name,
+                widget.list.length>0?widget.list[0].subNameFruit.name:"",
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.04),
               ),

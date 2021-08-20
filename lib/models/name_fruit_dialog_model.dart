@@ -14,7 +14,8 @@ class NameFruitModel extends ChangeNotifier {
         .getNameFruitDialog()
         .then((nameFruitList) => {
               list.clear(),
-              for (int i = 0; i < nameFruitList.length; i++){
+              for (int i = 0; i < nameFruitList.length; i++)
+                {
                   list.add(new NameFruitGridCard(nameFruitList[i])),
                 },
             })
@@ -23,23 +24,10 @@ class NameFruitModel extends ChangeNotifier {
 
   Future updateNameFruit(NameFruit nameFruit, String oldName) {
     return DatabaseQuery.db
-        .updateNameFruitDialog(nameFruit, oldName)
+        .updateNameFruitDialog(nameFruit)
         .then((value) async {
-      if (value) {
-        await DatabaseQuery.db
-            .updateNameOfSubNameFruitDialog(oldName, nameFruit.name)
-            .then((value) async {
-          if (value) {
-            await DatabaseQuery.db
-                .updateFruitByName(oldName, nameFruit.name)
-                .then((value) async {
-              refresh();
-              notifyListeners();
-            });
-          }
-        });
-      }
+      refresh();
+      notifyListeners();
     });
   }
-
 }
