@@ -22,7 +22,7 @@ class NameFruitModel extends ChangeNotifier {
         .then((value) => notifyListeners());
   }
 
-  Future updateNameFruit(NameFruit nameFruit, String oldName) {
+  Future updateNameFruit(NameFruit nameFruit) {
     return DatabaseQuery.db
         .updateNameFruitDialog(nameFruit)
         .then((value) async {

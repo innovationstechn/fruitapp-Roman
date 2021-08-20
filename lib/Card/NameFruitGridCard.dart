@@ -24,12 +24,13 @@ class _NameFruitCardState extends State<NameFruitGridCard>
         context: context,
         builder: (context) => getRenameDialog(context, (String updatedName) {
               NameFruit nameFruit = new NameFruit(
+                  id:widget.nameFruit.id,
                   name: updatedName,
                   imageSource: widget.nameFruit.imageSource);
 
 
               var result = Provider.of<NameFruitModel>(context, listen: false)
-                  .updateNameFruit(nameFruit, widget.nameFruit.name)
+                  .updateNameFruit(nameFruit)
                   .then((value) {
                 Provider.of<NameFruitModel>(context, listen: false).refresh();
 
