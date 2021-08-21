@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_rename_mixin.dart';
+import 'package:fruitapp/widgets/language_change_mixin.dart';
 import 'package:provider/provider.dart';
 import '../NameFruit.dart';
 
@@ -13,8 +12,6 @@ class NameFruitGridCard extends StatefulWidget {
   final color = Colors.black;
   final fontWeight = FontWeight.bold;
 
-
-
   NameFruitGridCard(this.nameFruit);
 
   @override
@@ -22,14 +19,15 @@ class NameFruitGridCard extends StatefulWidget {
 }
 
 class _NameFruitCardState extends State<NameFruitGridCard>
-    with ItemRenameMixin{
+    with ItemRenameMixin,LanguageChangeMixin{
   Future<void> onUpdate(BuildContext context) async {
     await showDialog(
         context: context,
         builder: (context) => getRenameDialog(context, (String updatedName) {
+
               NameFruit nameFruit = new NameFruit(
                   id:widget.nameFruit.id,
-                  name: updatedName,
+                  name: createEncodedJSONString(widget.nameFruit.name,updatedName),
                   imageSource: widget.nameFruit.imageSource);
 
               var result = Provider.of<NameFruitModel>(context, listen: false)
@@ -62,9 +60,7 @@ class _NameFruitCardState extends State<NameFruitGridCard>
                   children: [
                     GestureDetector(
                       child: Text(
-                          jsonDecode(widget.nameFruit.name)["en"] != null
-                              ? jsonDecode(widget.nameFruit.name)["en"]
-                              : "Unknown",
+                          translate(widget.nameFruit.name),
                           style: TextStyle(
                               fontSize: widget.fontSize,
                               color: widget.color,

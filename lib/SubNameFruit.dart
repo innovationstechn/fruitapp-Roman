@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class SubNameFruit {
   String name, type,imageSource,description;
   int id,nameFruitId;
@@ -23,4 +25,5 @@ class SubNameFruit {
         "imageSource": imageSource,
         "description": description
       };
+
 }

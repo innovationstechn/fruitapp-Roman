@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,12 +7,11 @@ import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
 import 'package:fruitapp/screens/timer.dart';
+import 'package:fruitapp/widgets/language_change_mixin.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:fruitapp/widgets/mlkg_dialog.dart';
 import 'package:provider/provider.dart';
-
 import '../Fruit.dart';
-import '../assets.dart';
 
 // The selections a user can make when they click on the option button
 // present at the right side of ViewPageItemWidget.
@@ -25,7 +22,7 @@ class DetailPage extends StatefulWidget {
   _DetailPageState createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
   // This controller takes input from the user when they enter thier comments.
   TextEditingController _controller = new TextEditingController();
   CarouselController _carouselController = new CarouselController();
@@ -73,7 +70,7 @@ class _DetailPageState extends State<DetailPage> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Center(
-                          child: Text(snapshot.data.name,
+                          child: Text(translate(snapshot.data.name),
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 20)),
                         ),
@@ -92,14 +89,14 @@ class _DetailPageState extends State<DetailPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      snapshot.data.name,
+                                      translate(snapshot.data.name),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Text(snapshot.data.type,
+                                    Text(translate(snapshot.data.type),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))
                                   ],
@@ -130,9 +127,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   // Unexpanded text field is clipped
                                                   // at 2 lines.
                                                   Text(
-                                                jsonDecode(fruit.description)["en"] != null
-                                                    ? jsonDecode(fruit.description)["en"]
-                                                    : "Unknown",
+                                                 translate(fruit.description),
                                                 softWrap: true,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
@@ -157,15 +152,7 @@ class _DetailPageState extends State<DetailPage> {
 
                                               // Description is static and stored in assets.dart
                                               child: Text(
-                                                jsonDecode(fruit.description)["en"] != null
-                                                    ? jsonDecode(fruit.description)["en"]
-                                                    : "Unknown",
-                                                // details[snapshot
-                                                //         .data.dummyName
-                                                //         .toLowerCase()]
-                                                //     ["description"][
-                                                // snapshot.data.dummyType
-                                                //     .toLowerCase()]
+                                                translate(fruit.description),
                                               ),
                                             ),
                                             ExpandableButton(

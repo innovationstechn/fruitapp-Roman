@@ -5,6 +5,7 @@ import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/models/sub_name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_grid_mixin.dart';
+import 'package:fruitapp/widgets/language_change_mixin.dart';
 import 'package:provider/provider.dart';
 
 class SubNameFruitDialog extends StatefulWidget {
@@ -16,7 +17,7 @@ class SubNameFruitDialog extends StatefulWidget {
   _SnameFruitDialog createState() => _SnameFruitDialog();
 }
 
-class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
+class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin,LanguageChangeMixin {
   double dialogHorizontalWidth = 24;
 
   @override
@@ -44,7 +45,7 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
                     })),
             Center(
               child: Text(
-                widget.list.length>0?widget.list[0].subNameFruit.name:"",
+                widget.list.length>0?translate(widget.list[0].subNameFruit.name):"",
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.04),
               ),

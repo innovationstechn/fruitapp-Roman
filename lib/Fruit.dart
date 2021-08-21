@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'MLKG.dart';
 
 class Fruit {
@@ -29,4 +31,5 @@ class Fruit {
           "categorySize": "None",
         if (id != null) "id": id,
       };
+
 }

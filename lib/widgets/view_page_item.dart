@@ -3,6 +3,7 @@ import 'package:fruitapp/Dialog/NameFruitDialog.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
+import 'package:fruitapp/widgets/language_change_mixin.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,7 @@ import 'mlkg_dialog.dart';
 enum PopupSelection { information, change, delete }
 
 // This widget is shown in the ListViews present on the Day page.
-class ViewPageItemWidget extends StatelessWidget {
+class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
   // The fruit that is shown.
   final Fruit fruit;
   // Controller for comment field.
@@ -57,14 +58,14 @@ class ViewPageItemWidget extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              fruit.name,
+                              translate(fruit.name),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             SizedBox(
                               width: 10,
                             ),
-                            Text(fruit.type,
+                            Text(translate(fruit.type),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 18))
                           ],

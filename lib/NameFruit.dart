@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class NameFruit {
   String name, imageSource;
   int id;
@@ -15,4 +17,5 @@ class NameFruit {
     if(id!=null)
       "id": id,
   };
+
 }

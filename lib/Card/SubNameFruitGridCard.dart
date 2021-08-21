@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/models/sub_name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_rename_mixin.dart';
+import 'package:fruitapp/widgets/language_change_mixin.dart';
 import 'package:provider/provider.dart';
 import '../SubNameFruit.dart';
 import '../assets.dart';
@@ -17,7 +18,7 @@ class GridCardSubNameFruit extends StatefulWidget {
 }
 
 class _SubNameCardState extends State<GridCardSubNameFruit>
-    with ItemRenameMixin {
+    with ItemRenameMixin,LanguageChangeMixin {
   bool isAdded = false;
 
   Future<void> onUpdate(BuildContext context) {
@@ -29,7 +30,7 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
                   id:widget.subNameFruit.id,
                   nameFruitId: widget.subNameFruit.nameFruitId,
                   imageSource: widget.subNameFruit.imageSource,
-                  type: updatedType);
+                  type: createEncodedJSONString(widget.subNameFruit.type, updatedType) );
 
               var result =
                   Provider.of<SubNameFruitModel>(context, listen: false)
@@ -101,7 +102,7 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
                 ),
                 GestureDetector(
                   // print("Edit Request Received");
-                  child: Text(widget.subNameFruit.type),
+                  child: Text(translate(widget.subNameFruit.type)),
                   onDoubleTap: () {
                     if (Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced  == null) {
                       onUpdate(context);
