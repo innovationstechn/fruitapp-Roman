@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/name_fruit_dialog_model.dart';
@@ -10,6 +12,8 @@ class NameFruitGridCard extends StatefulWidget {
   final fontSize = 20.0;
   final color = Colors.black;
   final fontWeight = FontWeight.bold;
+
+
 
   NameFruitGridCard(this.nameFruit);
 
@@ -28,16 +32,15 @@ class _NameFruitCardState extends State<NameFruitGridCard>
                   name: updatedName,
                   imageSource: widget.nameFruit.imageSource);
 
-
               var result = Provider.of<NameFruitModel>(context, listen: false)
                   .updateNameFruit(nameFruit)
                   .then((value) {
                 Provider.of<NameFruitModel>(context, listen: false).refresh();
-
-                // Navigator.of(context).pop();
+                Navigator.of(context).pop();
               });
             }));
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,10 @@ class _NameFruitCardState extends State<NameFruitGridCard>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      child: Text(widget.nameFruit.name,
+                      child: Text(
+                          jsonDecode(widget.nameFruit.name)["en"] != null
+                              ? jsonDecode(widget.nameFruit.name)["en"]
+                              : "Unknown",
                           style: TextStyle(
                               fontSize: widget.fontSize,
                               color: widget.color,
@@ -71,6 +77,6 @@ class _NameFruitCardState extends State<NameFruitGridCard>
                   ],
                 ),
               ]),
-        )); //Sizedbox,
+        ));
   }
 }

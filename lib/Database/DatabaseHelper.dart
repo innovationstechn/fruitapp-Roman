@@ -35,7 +35,8 @@ class DatabaseQuery {
           "id INTEGER PRIMARY KEY,"
           "nameFruitId INTEGER,"
           "type TEXT,"
-          "imageSource TEXT"
+          "imageSource TEXT,"
+          "description TEXT"
           ")");
 
       // Creating table and making date as a primary key
@@ -138,16 +139,20 @@ class DatabaseQuery {
         res.isNotEmpty ? res.map((c) => SubNameFruit.fromMap(c)).toList() : [];
 
     if (list.isEmpty) {
+
       try {
+
         var res = await db.update(
             "SubCategoryFruitDialog", subNameFruit.toMap(),
             where: "id= ?", whereArgs: [subNameFruit.id]);
+
         return true;
       } on DatabaseException {
         // If exception is thrown by database
         Fluttertoast.showToast(msg: StackTrace.current.toString());
         return false;
       }
+
     } else {
       // Type Already Exist with this name
       return false;
@@ -315,6 +320,7 @@ class DatabaseQuery {
         list[i].name = nameFruitList[0].name;
         list[i].type = subList[0].type;
         list[i].imageSource = subList[0].imageSource;
+        list[i].description = subList[0].description;
 
         weight =  await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
         // print("List return:"+weight.length.toString());
@@ -373,7 +379,9 @@ class DatabaseQuery {
     fetched.name = nameFruitList[0].name;
     fetched.type = subList[0].type;
     fetched.imageSource = subList[0].imageSource;
+    fetched.description = subList[0].description;
 
+    print("Description"+fetched.description.toString());
 
     // And then get the MLKGs.
     final List<Map<String, dynamic>> mlkgs =

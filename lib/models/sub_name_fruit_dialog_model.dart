@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fruitapp/Card/SubNameFruitGridCard.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/NameFruit.dart';
 import '../Fruit.dart';
 import '../SubNameFruit.dart';
 
@@ -9,12 +8,9 @@ class SubNameFruitModel extends ChangeNotifier {
   List<GridCardSubNameFruit> list = [];
   List<SubNameFruit> selectedElementForAddition= [];
 
-
   Future searchById(int nameFruitId) async {
 
-    print("Id:"+nameFruitId.toString());
     await DatabaseQuery.db.getSubNameFruitDialog(nameFruitId).then((nameFruitList) => {
-
 
       if (nameFruitList.isNotEmpty)
         {

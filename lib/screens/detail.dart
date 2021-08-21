@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
@@ -128,13 +130,9 @@ class _DetailPageState extends State<DetailPage> {
                                                   // Unexpanded text field is clipped
                                                   // at 2 lines.
                                                   Text(
-                                                // Description is static and stored in assets.dart
-                                                // details[snapshot.data.dummyName
-                                                //             .toLowerCase()]
-                                                //         ["description"][
-                                                //     snapshot.data.dummyType
-                                                //         .toLowerCase()],
-                                                "Description",
+                                                jsonDecode(fruit.description)["en"] != null
+                                                    ? jsonDecode(fruit.description)["en"]
+                                                    : "Unknown",
                                                 softWrap: true,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
@@ -159,7 +157,9 @@ class _DetailPageState extends State<DetailPage> {
 
                                               // Description is static and stored in assets.dart
                                               child: Text(
-                                                "Description",
+                                                jsonDecode(fruit.description)["en"] != null
+                                                    ? jsonDecode(fruit.description)["en"]
+                                                    : "Unknown",
                                                 // details[snapshot
                                                 //         .data.dummyName
                                                 //         .toLowerCase()]

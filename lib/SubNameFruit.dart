@@ -1,9 +1,9 @@
 class SubNameFruit {
-  String name, type,imageSource;
+  String name, type,imageSource,description;
   int id,nameFruitId;
 
   SubNameFruit(
-      {this.id,this.nameFruitId, this.type,this.imageSource});
+      {this.id,this.nameFruitId, this.type,this.imageSource,this.description});
 
   // Conversion from json to MLKG object
   factory SubNameFruit.fromMap(Map<String, dynamic> json) => new SubNameFruit(
@@ -11,6 +11,7 @@ class SubNameFruit {
         nameFruitId: json["nameFruitId"],
         type: json["type"],
         imageSource: json["imageSource"],
+        description: json["description"]
       );
 
   // Mapping MLKG for database.
@@ -20,5 +21,6 @@ class SubNameFruit {
         "nameFruitId":nameFruitId,
         "type": type,
         "imageSource": imageSource,
+        "description": description
       };
 }

@@ -8,30 +8,47 @@ import '../SubNameFruit.dart';
 class InitializeModel extends ChangeNotifier {
   // Load the fruits of a date.
 
-  List<String> fruitNames = ["apple", "banana", "pear", "watermelon"];
-  List<String> colours = [
-    "black",
-    "green",
-    "blue",
-    "red",
-    "yellow",
-    "orange",
-    "grey",
-    "white"
-  ];
+  final Map initial = {
+    "fruits": ["apple"],
+    "data": [
+      {
+        "apple": {
+          "name": r'''{"en": "Apple","ru":"Hello"}''',
+          "imagePath": "assets/fruits/apple/1.png",
+          "subtypes": [
+            {
+              "type": "red",
+              "image": "assets/fruits/apple/1.gif",
+              "description":  r'''{"en": "Very nutritious", "ru": "питательный"}'''
+            },
+            {
+              "type": "black",
+              "image": "assets/fruits/apple/2.gif",
+              "description": r'''{"en": "Very nutritious", "ru": "питательный"}'''
+            }
+          ]
+        }
+      }
+    ]
+  };
+
+  List<String> fruitNames;
 
   Future initializeDatabase() async {
+    fruitNames  = initial["fruits"];
+    String raw;
     await DatabaseQuery.db
         .getNameFruitDialog()
         .then((nameFruitList) async => {
               if (nameFruitList.isEmpty)
                 {
+
                   for (int i = 0; i < fruitNames.length; i++)
                     {
                       await addNameFruit(NameFruit(
-                              name: fruitNames[i],
+                              name: (initial["data"][i][fruitNames[i]]["name"]),
                               imageSource:
-                                  basePath + details[fruitNames[i]]["image"]))
+                              initial["data"][i][fruitNames[i]]["imagePath"]),initial["data"][i][fruitNames[i]]["subtypes"])
                     },
                 },
             })
@@ -40,17 +57,14 @@ class InitializeModel extends ChangeNotifier {
     });
   }
 
-  Future insertIntoSubName(int id,String name) async {
-    print("Fruit Id"+id.toString());
-    for (int i = 0; i < colours.length; i++) {
+  Future insertIntoSubName(int id,var subCatItems) async {
+    for (int i = 0; i < subCatItems.length; i++) {
       await addSubNameFruit(SubNameFruit(
           nameFruitId: id,
-          type: colours[i],
-          imageSource: basePath +
-              name.toLowerCase() +
-              "/" +
-              details[name.toLowerCase()]['variants'][colours[i]] +
-              ".gif"));
+          type: subCatItems[i]["type"],
+          imageSource: subCatItems[i]["image"],
+          description: subCatItems[i]["description"],
+      ));
     }
   }
 
@@ -58,9 +72,9 @@ class InitializeModel extends ChangeNotifier {
     return DatabaseQuery.db.newSubNameFruitDialog(subNameFruit).then((_) {});
   }
 
-  Future addNameFruit(NameFruit nameFruit) async {
+  Future addNameFruit(NameFruit nameFruit,var subCat) async {
     await DatabaseQuery.db.newNameFruitDialog(nameFruit).then((value) async {
-      await insertIntoSubName(value,nameFruit.name);
+      await insertIntoSubName(value,subCat);
     });
   }
 }

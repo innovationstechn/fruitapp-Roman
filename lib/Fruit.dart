@@ -1,7 +1,7 @@
 import 'MLKG.dart';
 
 class Fruit {
-  String name, type,date,imageSource,time, categorySize, comment;
+  String name, type,date,description,imageSource,time, categorySize, comment;
   int id,subCategoryId;
   List<MLKG> mlkg = [];
 
