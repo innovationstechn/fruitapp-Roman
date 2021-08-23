@@ -10,8 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:time_machine/time_machine.dart';
 
-import 'models/initialize_database.dart';
 import 'models/fruit_model.dart';
+import 'models/initialize_database.dart';
 import 'models/name_fruit_dialog_model.dart';
 import 'models/sub_name_fruit_dialog_model.dart';
 
@@ -32,7 +32,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => FruitModel()),
       ChangeNotifierProvider(create: (_) => NameFruitModel()),
       ChangeNotifierProvider(create: (_) => SubNameFruitModel()),
-      ChangeNotifierProvider(create: (_) => InitializeModel())
+      ChangeNotifierProvider(create: (context) => InitializeModel(context))
     ],
     builder: (context, widget) {
       return MyApp();
