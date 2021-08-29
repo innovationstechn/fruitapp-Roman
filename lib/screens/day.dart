@@ -16,9 +16,7 @@ class DayPage extends StatefulWidget {
   _DayPageState createState() => _DayPageState();
 }
 
-
-class _DayPageState extends State<DayPage>{
-
+class _DayPageState extends State<DayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +26,11 @@ class _DayPageState extends State<DayPage>{
         builder: (_, data, __) {
           // Fetch the fruits that have been stored against the current day.
           Provider.of<FruitModel>(context, listen: false)
-              .refresh(data.currentDate).then((value){
-                Provider.of<LanguageModel>(context,listen: false).setLanguage(Localizations.localeOf(context).languageCode);
-              });
+              .refresh(data.currentDate)
+              .then((value) {
+            Provider.of<LanguageModel>(context, listen: false)
+                .setLanguage(Localizations.localeOf(context).languageCode);
+          });
 
           // PageView allows us to scroll horizontally.
           return PageView.builder(
@@ -110,7 +110,7 @@ class _DayPageState extends State<DayPage>{
         onPressed: () {
           print("Initialize Database Called");
           Provider.of<InitializeModel>(context, listen: false)
-              .initializeDatabase()
+              .initializeDatabase(context)
               .then((value) => {
                     Provider.of<NameFruitModel>(context, listen: false)
                         .refresh()
@@ -118,13 +118,11 @@ class _DayPageState extends State<DayPage>{
           showDialog(
               context: context,
               builder: (context) {
-
-                Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced = null;
+                Provider.of<FruitModel>(context, listen: false)
+                    .fruitToBeReplaced = null;
 
                 return NameFruitDialog();
-
               }).then((value) => {
-
                 // // In case the user added any fruits, refresh the current
                 // page's fruit lists.
                 Provider.of<FruitModel>(context, listen: false).refresh(

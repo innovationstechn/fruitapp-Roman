@@ -4,49 +4,43 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Model_Classes/NameFruit.dart';
 import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
-import 'package:provider/provider.dart';
-
-import 'name_fruit_dialog_model.dart';
 
 class InitializeModel extends ChangeNotifier {
   // Load the fruits of a date.
 
   Map initial;
-  List<String> fruitNames;
+  List<dynamic> fruitNames;
 
-  InitializeModel(BuildContext context) {
+  Future initializeDatabase(BuildContext context) async {
     DefaultAssetBundle.of(context)
         .loadString("assets/data.json")
-        .then((String encodedJson){
-          print(encodedJson);
-          initial = jsonDecode(encodedJson);
-    });
-  }
+        .then((String encodedJson) async {
 
-  Future initializeDatabase() async {
-    fruitNames = initial["fruits"];
+      initial = jsonDecode(encodedJson);
+      fruitNames = initial["fruits"];
 
-    await DatabaseQuery.db
-        .getNameFruitDialog()
-        .then((nameFruitList) async => {
-              if (nameFruitList.isEmpty)
-                {
-                  for (int i = 0; i < fruitNames.length; i++)
-                    {
-                      await addNameFruit(
-                          NameFruit(
-                              name: json
-                                  .encode(
-                                      initial["data"][i][fruitNames[i]]["name"])
-                                  .toString(),
-                              imageSource: initial["data"][i][fruitNames[i]]
-                                  ["imagePath"]),
-                          initial["data"][i][fruitNames[i]]["subtypes"])
-                    },
-                },
-            })
-        .then((_) {
-      return;
+      await DatabaseQuery.db
+          .getNameFruitDialog()
+          .then((nameFruitList) async => {
+                if (nameFruitList.isEmpty)
+                  {
+                    for (int i = 0; i < fruitNames.length; i++)
+                      {
+                        await addNameFruit(
+                            NameFruit(
+                                name: json
+                                    .encode(initial["data"][i][fruitNames[i]]
+                                        ["name"])
+                                    .toString(),
+                                imageSource: initial["data"][i][fruitNames[i]]
+                                    ["imagePath"]),
+                            initial["data"][i][fruitNames[i]]["subtypes"])
+                      },
+                  },
+              })
+          .then((_) {
+        return;
+      });
     });
   }
 
