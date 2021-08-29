@@ -19,7 +19,11 @@ class InitializeModel extends ChangeNotifier {
         .loadString("assets/data.json")
         .then((String encodedJson) async {
        // Converting json string to Map
+      print(encodedJson);
       initial = jsonDecode(encodedJson);
+
+      // print(initial);
+
       fruitNames = initial["fruits"];
 
       await DatabaseQuery.db
@@ -29,6 +33,12 @@ class InitializeModel extends ChangeNotifier {
                   {
                     for (int i = 0; i < fruitNames.length; i++)
                       {
+                        print(fruitNames.length),
+                        print(json
+                            .encode(initial["data"][i][fruitNames[i]]
+                        ["name"])
+                            .toString()),
+
                         await addNameFruit(
                             NameFruit(
                                 name: json

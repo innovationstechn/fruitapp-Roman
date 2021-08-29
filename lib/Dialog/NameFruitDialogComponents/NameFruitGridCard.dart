@@ -61,22 +61,26 @@ class _NameFruitCardState extends State<NameFruitGridCard>
                   width: 100,
                   fit: BoxFit.fill,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      child: Text(language.translate(widget.nameFruit.name),
-                          style: TextStyle(
-                              fontSize: widget.fontSize,
-                              color: widget.color,
-                              fontWeight: widget.fontWeight,
-                              decoration: TextDecoration.combine([]))),
-                      onDoubleTap: () async {
-                        // Here you can enable the edit fruit name functionality
-                        // await onUpdate(context);
-                      },
-                    ),
-                  ],
+                FittedBox(
+                  fit:BoxFit.fitWidth,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        child: Text(language.translate(widget.nameFruit.name),
+                            overflow:TextOverflow.clip,
+                            style: TextStyle(
+                                fontSize: widget.fontSize,
+                                color: widget.color,
+                                fontWeight: widget.fontWeight,
+                                decoration: TextDecoration.combine([]))),
+                        onDoubleTap: () async {
+                          // Here you can enable the edit fruit name functionality
+                          // await onUpdate(context);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ]));
         }));

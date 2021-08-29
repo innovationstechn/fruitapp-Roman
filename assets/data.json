@@ -1,6 +1,6 @@
 {
   "fruits": [
-    "apple"
+    "apple","watermelon"
   ],
   "data": [
     {
@@ -28,6 +28,50 @@
               "ru": "питательный"
             },
             "image": "assets/fruits/apple/2.gif",
+            "description": {
+              "en": "Very nutritious",
+              "ru": "питательный"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "watermelon": {
+        "name": {
+          "en": "WaterMelon",
+          "ru": "Hello"
+        },
+        "imagePath": "assets/fruits/watermelon/1.png",
+        "subtypes": [
+          {
+            "type": {
+              "en": "red",
+              "ru": "питательный"
+            },
+            "image": "assets/fruits/watermelon/1.gif",
+            "description": {
+              "en": "Very nutritious",
+              "ru": "питательный"
+            }
+          },
+          {
+            "type": {
+              "en": "black",
+              "ru": "питательный"
+            },
+            "image": "assets/fruits/watermelon/2.gif",
+            "description": {
+              "en": "Very nutritious",
+              "ru": "питательный"
+            }
+          },
+          {
+            "type": {
+              "en": "blue",
+              "ru": "питательный"
+            },
+            "image": "assets/fruits/pear/3.gif",
             "description": {
               "en": "Very nutritious",
               "ru": "питательный"
