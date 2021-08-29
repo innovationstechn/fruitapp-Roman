@@ -87,7 +87,7 @@ class DatabaseQuery {
       if (list.isEmpty) {
         var res = await db.update("NameFruitDialog", nameFruit.toMap(),
             where: "id = ?", whereArgs: [nameFruit.id]);
-        Fluttertoast.showToast(msg: "Added");
+
         return true;
       }
       return false;
@@ -118,7 +118,6 @@ class DatabaseQuery {
     try {
       // Query for inserting MLKG
       var res = await db.insert("SubCategoryFruitDialog", subNameFruit.toMap());
-      Fluttertoast.showToast(msg: "Added");
     } on DatabaseException {
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "Already Exists in your List");

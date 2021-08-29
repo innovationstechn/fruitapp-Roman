@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class NameFruitGridCard extends StatefulWidget {
   final NameFruit nameFruit;
-  final fontSize = 20.0;
+  final fontSize = 40.0;
   final color = Colors.black;
   final fontWeight = FontWeight.bold;
 
