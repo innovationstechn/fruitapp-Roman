@@ -37,10 +37,8 @@ class InitializeModel extends ChangeNotifier {
                             initial["data"][i][fruitNames[i]]["subtypes"])
                       },
                   },
-              })
-          .then((_) {
-        return;
-      });
+              });
+      return;
     });
   }
 
