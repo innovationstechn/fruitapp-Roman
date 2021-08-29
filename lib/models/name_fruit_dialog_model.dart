@@ -9,6 +9,7 @@ class NameFruitModel extends ChangeNotifier {
 
   List<NameFruitGridCard> list = [];
 
+  // Getting list from database and notifies to application.
   Future refresh() async {
     await DatabaseQuery.db
         .getNameFruitDialog()

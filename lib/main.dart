@@ -15,7 +15,6 @@ import 'models/initialize_database.dart';
 import 'models/fruit_model.dart';
 import 'models/name_fruit_dialog_model.dart';
 import 'models/sub_name_fruit_dialog_model.dart';
-import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,11 +59,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Flutter Demo',
+      // Adding Localization
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      // All supported languages should be mentioned here.
       supportedLocales: [
         Locale('ru',''),
         Locale('en',''),

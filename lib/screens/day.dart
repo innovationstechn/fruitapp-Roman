@@ -4,7 +4,6 @@ import 'package:fruitapp/models/initialize_database.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/models/lanuguage_model.dart';
-import 'package:fruitapp/models/name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';

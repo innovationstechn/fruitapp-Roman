@@ -19,7 +19,7 @@ class GridCardSubNameFruit extends StatefulWidget {
 class _SubNameCardState extends State<GridCardSubNameFruit>
     with ItemRenameMixin {
   bool isAdded = false;
-
+  // onUpdate is used to open dialog for getting new type and update the type in database.
   Future<void> onUpdate(BuildContext context) {
     showDialog(
         context: context,

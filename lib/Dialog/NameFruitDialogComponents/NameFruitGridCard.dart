@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 
 class NameFruitGridCard extends StatefulWidget {
   final NameFruit nameFruit;
+
+ // Here you can change the font Size,color and Font weight of Fruit name.
   final fontSize = 40.0;
   final color = Colors.black;
   final fontWeight = FontWeight.bold;
@@ -21,6 +23,8 @@ class NameFruitGridCard extends StatefulWidget {
 
 class _NameFruitCardState extends State<NameFruitGridCard>
     with ItemRenameMixin {
+
+  // onUpdate is used to open dialog for getting new name and update the name in database.
   Future<void> onUpdate(BuildContext context) async {
     await showDialog(
         context: context,

@@ -8,6 +8,7 @@ import 'package:fruitapp/widgets/item_grid_mixin.dart';
 import 'package:provider/provider.dart';
 import '../SubCategoryFruitDialogComponents/SubCategoryFruitDialog.dart';
 
+
 class NameFruitDialog extends StatefulWidget {
 
   NameFruitDialog();
@@ -16,6 +17,7 @@ class NameFruitDialog extends StatefulWidget {
   _nameFruitDialog createState() => _nameFruitDialog();
 }
 
+// NameFruitDialog class provides the functionality of first dialog opening.
 class _nameFruitDialog extends State<NameFruitDialog> with ItemGridMixin {
   double dialogHorizontalWidth = 24;
 
@@ -56,14 +58,16 @@ class _nameFruitDialog extends State<NameFruitDialog> with ItemGridMixin {
               height: MediaQuery.of(context).size.height * 0.68,
               child: Container(
                   color: Colors.white,
+
                   child: gridViewBuilder(data.list, (index) async {
 
+                    // Building list according to id of fruit pressed.
                     Provider.of<SubNameFruitModel>(context,
                         listen: false)
                         .searchById(
                         data.list[index].nameFruit.id);
 
-
+                    // Showing dialog using list of sub fruits(types) using list in SubNameFruit model
                     await showDialog(
                         context: context,
                         builder: (_) => Consumer<SubNameFruitModel>(

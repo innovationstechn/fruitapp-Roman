@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 class ItemRenameMixin {
 
+  // Get Rename dialog return the dialog for getting input from user. And calls function which is passed from Dialogs
+  // (NameFruitGridCard or SubNameFruitGridCard)
   Widget getRenameDialog(BuildContext context, Function(String) onUpdateTap) {
     final textEditingController = TextEditingController();
 

@@ -5,20 +5,20 @@ import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Model_Classes/NameFruit.dart';
 import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
 import 'package:provider/provider.dart';
-
 import 'name_fruit_dialog_model.dart';
 
+// This class is used to Initialize the database using data.json file in asset folder
 class InitializeModel extends ChangeNotifier {
-  // Load the fruits of a date.
 
   Map initial;
   List<dynamic> fruitNames;
 
   Future initializeDatabase(BuildContext context) async {
+    // Getting data.json content as string
     DefaultAssetBundle.of(context)
         .loadString("assets/data.json")
         .then((String encodedJson) async {
-
+       // Converting json string to Map
       initial = jsonDecode(encodedJson);
       fruitNames = initial["fruits"];
 
@@ -48,12 +48,14 @@ class InitializeModel extends ChangeNotifier {
 
   }
 
+  // Inserting Name of fruits
   Future addNameFruit(NameFruit nameFruit, var subCat) async {
     await DatabaseQuery.db.newNameFruitDialog(nameFruit).then((value) async {
       await insertIntoSubName(value, subCat);
     });
   }
 
+  // Inserting sub types of fruits
   Future insertIntoSubName(int id, var subCatItems) async {
     for (int i = 0; i < subCatItems.length; i++) {
       await addSubNameFruit(SubNameFruit(

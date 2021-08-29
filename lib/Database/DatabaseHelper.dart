@@ -356,8 +356,8 @@ class DatabaseQuery {
     return dates;
   }
 
-  // Get a single fruit (matching the specified ID) and it's
-  // associated MLKG items from the database.
+  // Get a single fruit (matching the specified ID) and
+  // associated SubCategory and MLKG items from the database.
   Future<Fruit> getFruit(int id) async {
     final db = await database;
 

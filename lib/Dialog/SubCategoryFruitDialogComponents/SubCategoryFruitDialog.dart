@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'SubNameFruitGridCard.dart';
 
+// This widget is used to open dialog for types of fruit.
 class SubNameFruitDialog extends StatefulWidget {
   final List<GridCardSubNameFruit> list;
 
@@ -126,7 +127,6 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
                                         )));
                               }
                               Navigator.of(context).pop();
-                              //After adding food in database clear the selected List and pop out
                             },
                             child: Text(
                               "Add",

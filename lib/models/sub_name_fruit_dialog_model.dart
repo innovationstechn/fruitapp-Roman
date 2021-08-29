@@ -4,6 +4,7 @@ import 'package:fruitapp/Dialog/SubCategoryFruitDialogComponents/SubNameFruitGri
 import 'package:fruitapp/Model_Classes/Fruit.dart';
 import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
 
+
 class SubNameFruitModel extends ChangeNotifier {
   List<GridCardSubNameFruit> list = [];
   List<SubNameFruit> selectedElementForAddition= [];
@@ -24,6 +25,8 @@ class SubNameFruitModel extends ChangeNotifier {
     });
   }
 
+  // This function helps in adding and removing the item from list which is pressed on SubNameDialog( Fruit Types)
+  // It helps in multi selection of items.
   void addToSelectedList(SubNameFruit subNameFruit){
     if(this.selectedElementForAddition.contains(subNameFruit))
       this.selectedElementForAddition.remove(subNameFruit);
@@ -31,6 +34,7 @@ class SubNameFruitModel extends ChangeNotifier {
       this.selectedElementForAddition.add(subNameFruit);
   }
 
+  // This function is used to insert selected fruit types to Database
   Future<String> addSelectedListToDB(String date)async{
 
     String fruitTypes = "";
@@ -50,6 +54,7 @@ class SubNameFruitModel extends ChangeNotifier {
 
   }
 
+  // It helps in updating the type of fruit.
   Future updateSubNameFruit(SubNameFruit nameFruit) {
     return DatabaseQuery.db
         .updateTypeOfSubNameFruitDialog(nameFruit)
