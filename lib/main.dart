@@ -34,7 +34,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => FruitModel()),
       ChangeNotifierProvider(create: (_) => NameFruitModel()),
       ChangeNotifierProvider(create: (_) => SubNameFruitModel()),
-      ChangeNotifierProvider(create: (_) => InitializeModel()),
+      ChangeNotifierProvider(create: (context) => InitializeModel(context)),
     ],
     builder: (context, widget) {
       return MyApp();

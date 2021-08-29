@@ -4,35 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Model_Classes/NameFruit.dart';
 import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
+import 'package:provider/provider.dart';
+
+import 'name_fruit_dialog_model.dart';
 
 class InitializeModel extends ChangeNotifier {
   // Load the fruits of a date.
 
-  final Map initial = {
-    "fruits": ["apple"],
-    "data": [
-      {
-        "apple": {
-          "name": {"en": "Apple", "ru": "Hello"},
-          "imagePath": "assets/fruits/apple/1.png",
-          "subtypes": [
-            {
-              "type": {"en": "red", "ru": "питательный"},
-              "image": "assets/fruits/apple/1.gif",
-              "description": {"en": "Very nutritious", "ru": "питательный"}
-            },
-            {
-              "type": {"en": "black", "ru": "питательный"},
-              "image": "assets/fruits/apple/2.gif",
-              "description": {"en": "Very nutritious", "ru": "питательный"}
-            }
-          ]
-        }
-      }
-    ]
-  };
-
+  Map initial;
   List<String> fruitNames;
+
+  InitializeModel(BuildContext context) {
+    DefaultAssetBundle.of(context)
+        .loadString("assets/data.json")
+        .then((String encodedJson){
+          print(encodedJson);
+          initial = jsonDecode(encodedJson);
+    });
+  }
 
   Future initializeDatabase() async {
     fruitNames = initial["fruits"];
