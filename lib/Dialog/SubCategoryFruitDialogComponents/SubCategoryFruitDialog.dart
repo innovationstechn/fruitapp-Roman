@@ -61,9 +61,13 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> with ItemGridMixin {
                         : Icon(Icons.zoom_in),
                     onPressed: () {
                       setState(() {
-                        dialogHorizontalWidth == 0
+                        // Code for Changing width of dialog
+
+/*                        dialogHorizontalWidth == 0
                             ? dialogHorizontalWidth = 24
                             : dialogHorizontalWidth = 0;
+
+ */
                       });
                     }),
               ],

@@ -47,9 +47,12 @@ class _nameFruitDialog extends State<NameFruitDialog> with ItemGridMixin {
                         : Icon(Icons.zoom_in),
                     onPressed: () {
                       setState(() {
-                        dialogHorizontalWidth == 0
+                        // Code For Changing Width of Dialog
+                        /*
+                            dialogHorizontalWidth == 0
                             ? dialogHorizontalWidth = 24
                             : dialogHorizontalWidth = 0;
+                         */
                       });
                     }),
               ],

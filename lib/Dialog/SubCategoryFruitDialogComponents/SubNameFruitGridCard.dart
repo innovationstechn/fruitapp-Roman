@@ -112,7 +112,7 @@ class _SubNameCardState extends State<GridCardSubNameFruit>
                         if (Provider.of<FruitModel>(context, listen: false)
                                 .fruitToBeReplaced ==
                             null) {
-                          onUpdate(context);
+                          // onUpdate(context);
                         }
                       },
                     )

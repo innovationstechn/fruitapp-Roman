@@ -72,7 +72,8 @@ class _NameFruitCardState extends State<NameFruitGridCard>
                               fontWeight: widget.fontWeight,
                               decoration: TextDecoration.combine([]))),
                       onDoubleTap: () async {
-                        await onUpdate(context);
+                        // Here you can enable the edit fruit name functionality
+                        // await onUpdate(context);
                       },
                     ),
                   ],
