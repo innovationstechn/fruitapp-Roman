@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Card/NameFruitGridCard.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/NameFruit.dart';
+import 'package:fruitapp/Dialog/NameFruitDialogComponents/NameFruitGridCard.dart';
+import 'package:fruitapp/Model_Classes/NameFruit.dart';
 
 class NameFruitModel extends ChangeNotifier {
   // Load the fruits of a date.

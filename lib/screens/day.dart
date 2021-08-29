@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/Dialog/NameFruitDialogComponents/NameFruitDialog.dart';
 import 'package:fruitapp/models/initialize_database.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/models/lanuguage_model.dart';
 import 'package:fruitapp/models/name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
-class DayPage extends StatelessWidget {
+class DayPage extends StatefulWidget {
+  const DayPage();
+
+  @override
+  _DayPageState createState() => _DayPageState();
+}
+
+
+class _DayPageState extends State<DayPage>{
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +28,10 @@ class DayPage extends StatelessWidget {
         builder: (_, data, __) {
           // Fetch the fruits that have been stored against the current day.
           Provider.of<FruitModel>(context, listen: false)
-              .refresh(data.currentDate);
+              .refresh(data.currentDate).then((value){
+                Provider.of<LanguageModel>(context,listen: false).setLanguage(Localizations.localeOf(context).languageCode);
+              });
+
           // PageView allows us to scroll horizontally.
           return PageView.builder(
               itemBuilder: (context, index) {

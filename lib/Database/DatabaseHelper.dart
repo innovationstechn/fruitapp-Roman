@@ -1,11 +1,10 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fruitapp/NameFruit.dart';
-import 'package:fruitapp/SubNameFruit.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
+import 'package:fruitapp/Model_Classes/MLKG.dart';
+import 'package:fruitapp/Model_Classes/NameFruit.dart';
+import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../Fruit.dart';
-import '../MLKG.dart';
 
 class DatabaseQuery {
   DatabaseQuery._();
@@ -375,13 +374,10 @@ class DatabaseQuery {
     var nameFruit = await db.rawQuery('SELECT * FROM NameFruitDialog WHERE id=?', [subList[0].nameFruitId]);
     List<NameFruit> nameFruitList =  nameFruit.isNotEmpty ? nameFruit.map((c) => NameFruit.fromMap(c)).toList() : [];
 
-    print("Name:"+nameFruitList[0].name);
     fetched.name = nameFruitList[0].name;
     fetched.type = subList[0].type;
     fetched.imageSource = subList[0].imageSource;
     fetched.description = subList[0].description;
-
-    print("Description"+fetched.description.toString());
 
     // And then get the MLKGs.
     final List<Map<String, dynamic>> mlkgs =

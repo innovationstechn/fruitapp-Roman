@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/Dialog/NameFruitDialogComponents/NameFruitDialog.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/models/lanuguage_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
-import 'package:fruitapp/widgets/language_change_mixin.dart';
-import 'package:fruitapp/widgets/mlkg.dart';
+import 'package:fruitapp/Dialog/MLKG%20Dialog/mlkg.dart';
 import 'package:provider/provider.dart';
-
-import '../Fruit.dart';
-import 'mlkg_dialog.dart';
+import '../Dialog/MLKG Dialog/mlkg_dialog.dart';
 
 // The selections a user can make when they click on the option button
 // present at the right side of ViewPageItemWidget.
 enum PopupSelection { information, change, delete }
 
 // This widget is shown in the ListViews present on the Day page.
-class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
+class ViewPageItemWidget extends StatelessWidget {
   // The fruit that is shown.
   final Fruit fruit;
+
   // Controller for comment field.
   final TextEditingController commentController = new TextEditingController();
 
@@ -26,9 +26,8 @@ class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
   @override
   Widget build(BuildContext context) {
     commentController.text = fruit.comment == null ? "" : fruit.comment;
-
-    return Card(
-      child: Column(
+    return Card(child: Consumer<LanguageModel>(builder: (_, language, __) {
+      return Column(
         children: [
           Container(
             padding: EdgeInsets.all(5),
@@ -42,7 +41,6 @@ class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
                       fit: BoxFit.contain,
                       // Image of the fruits is fruit is obtained by stitching
                       // together paths present in the assets page.
-
 
                       child: Image.asset(fruit.imageSource),
                     ),
@@ -58,14 +56,14 @@ class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
                         Row(
                           children: [
                             Text(
-                              translate(fruit.name),
+                              language.translate(fruit.name),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             SizedBox(
                               width: 10,
                             ),
-                            Text(translate(fruit.type),
+                            Text(language.translate(fruit.type),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 18))
                           ],
@@ -157,17 +155,6 @@ class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
                                     no: index + 1,
                                   ),
                                 );
-                                // else
-                                //   return IconButton(
-                                //       alignment: Alignment.centerLeft,
-                                //       icon: Icon(Icons.add),
-                                //       onPressed: () {
-                                //         showDialog(
-                                //             context: context,
-                                //             builder: (context) {
-                                //               return AddMLKGDialog(fruit: fruit);
-                                //             });
-                                //       });
                               }),
                         ),
                       ],
@@ -187,11 +174,12 @@ class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
                           // If the user wants to change the fruit type, then
                           // a dialog is shown to the user.
                           showDialog(
-                                  context: context,
-                                  builder: (_){
-                                    Provider.of<FruitModel>(context,listen: false).fruitToBeReplaced = fruit;
-                                    return NameFruitDialog();
-                                  });
+                              context: context,
+                              builder: (_) {
+                                Provider.of<FruitModel>(context, listen: false)
+                                    .fruitToBeReplaced = fruit;
+                                return NameFruitDialog();
+                              });
                         } else if (result == PopupSelection.information) {
                           Navigator.of(context)
                               // If the user wants to get more information about
@@ -260,7 +248,7 @@ class ViewPageItemWidget extends StatelessWidget with LanguageChangeMixin {
             ],
           ),
         ],
-      ),
-    );
+      );
+    }));
   }
 }

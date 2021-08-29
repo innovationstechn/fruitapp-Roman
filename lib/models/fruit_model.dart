@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/SubNameFruit.dart';
-import '../Fruit.dart';
-import '../MLKG.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
+import 'package:fruitapp/Model_Classes/MLKG.dart';
+import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
 
 
 // This model holds data of the fruits of the current day

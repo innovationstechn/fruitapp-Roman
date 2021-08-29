@@ -6,7 +6,7 @@ import 'package:fruitapp/models/name_fruit_dialog_model.dart';
 import 'package:fruitapp/models/sub_name_fruit_dialog_model.dart';
 import 'package:fruitapp/widgets/item_grid_mixin.dart';
 import 'package:provider/provider.dart';
-import 'SubCategoryFruitDialog.dart';
+import '../SubCategoryFruitDialogComponents/SubCategoryFruitDialog.dart';
 
 class NameFruitDialog extends StatefulWidget {
 

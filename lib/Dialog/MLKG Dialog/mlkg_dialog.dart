@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fruitapp/MLKG.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
+import 'package:fruitapp/Model_Classes/MLKG.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:provider/provider.dart';
-
-import '../Fruit.dart';
 
 // The widget containing the dialog that add/edits mlkg items.
 class AddUpdateMLKGDialog extends StatefulWidget {

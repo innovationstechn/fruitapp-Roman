@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:fruitapp/Card/SubNameFruitGridCard.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import '../Fruit.dart';
-import '../SubNameFruit.dart';
+import 'package:fruitapp/Dialog/SubCategoryFruitDialogComponents/SubNameFruitGridCard.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
+import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
 
 class SubNameFruitModel extends ChangeNotifier {
   List<GridCardSubNameFruit> list = [];

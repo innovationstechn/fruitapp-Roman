@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/lanuguage_model.dart';
 import 'package:provider/provider.dart';
 
 // This app bar is standarised: it is present on almost every page
@@ -14,6 +15,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return AppBar(
         actions: [
           IconButton(
@@ -21,7 +23,6 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () {
                 CalenderModel calenderModel =
                     Provider.of<CalenderModel>(context, listen: false);
-
                 // If the calender is already open, then close it and set
                 // the calenderModel's isCalenderOpen attribute to false.
                 if (ModalRoute.of(context).settings.name == "/calender" &&

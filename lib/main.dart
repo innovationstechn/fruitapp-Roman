@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/lanuguage_model.dart';
 import 'package:fruitapp/screens/calender.dart';
 import 'package:fruitapp/screens/day.dart';
 import 'package:fruitapp/screens/information.dart';
@@ -9,11 +11,11 @@ import 'package:fruitapp/screens/timetable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:time_machine/time_machine.dart';
-
 import 'models/initialize_database.dart';
 import 'models/fruit_model.dart';
 import 'models/name_fruit_dialog_model.dart';
 import 'models/sub_name_fruit_dialog_model.dart';
+import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,17 +24,17 @@ Future<void> main() async {
   // Also see assets in pubspec.yaml for another required initialization.
   WidgetsFlutterBinding.ensureInitialized();
   await TimeMachine.initialize({'rootBundle': rootBundle});
-
   // Providers at the top of the widget tree for keeping the state visible
   // everywhere in the application.
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create:(_)=> LanguageModel()),
       ChangeNotifierProvider(create: (_) => CalenderModel()),
       ChangeNotifierProvider(create: (_) => DayModel()),
       ChangeNotifierProvider(create: (_) => FruitModel()),
       ChangeNotifierProvider(create: (_) => NameFruitModel()),
       ChangeNotifierProvider(create: (_) => SubNameFruitModel()),
-      ChangeNotifierProvider(create: (_) => InitializeModel())
+      ChangeNotifierProvider(create: (_) => InitializeModel()),
     ],
     builder: (context, widget) {
       return MyApp();
@@ -55,8 +57,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('ru',''),
+        Locale('en',''),
+      ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

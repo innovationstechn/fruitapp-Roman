@@ -3,15 +3,15 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/models/lanuguage_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
 import 'package:fruitapp/screens/timer.dart';
-import 'package:fruitapp/widgets/language_change_mixin.dart';
-import 'package:fruitapp/widgets/mlkg.dart';
-import 'package:fruitapp/widgets/mlkg_dialog.dart';
+import 'package:fruitapp/Dialog/MLKG%20Dialog/mlkg.dart';
+import 'package:fruitapp/Dialog/MLKG%20Dialog/mlkg_dialog.dart';
 import 'package:provider/provider.dart';
-import '../Fruit.dart';
 
 // The selections a user can make when they click on the option button
 // present at the right side of ViewPageItemWidget.
@@ -22,7 +22,7 @@ class DetailPage extends StatefulWidget {
   _DetailPageState createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
+class _DetailPageState extends State<DetailPage>{
   // This controller takes input from the user when they enter thier comments.
   TextEditingController _controller = new TextEditingController();
   CarouselController _carouselController = new CarouselController();
@@ -42,6 +42,8 @@ class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
 
     return Consumer<FruitModel>(
       builder: (_, data, __) {
+      return Consumer<LanguageModel>(
+        builder: (_, language, __) {
         return FutureBuilder(
             // Every time the an update is performed in the database on the
             // fruit, the Consumer remakes the FutureBuilder, which in turn
@@ -70,7 +72,7 @@ class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Center(
-                          child: Text(translate(snapshot.data.name),
+                          child: Text(language.translate(snapshot.data.name),
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 20)),
                         ),
@@ -89,14 +91,14 @@ class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      translate(snapshot.data.name),
+                                      language.translate(snapshot.data.name),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Text(translate(snapshot.data.type),
+                                    Text(language.translate(snapshot.data.type),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))
                                   ],
@@ -127,7 +129,7 @@ class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
                                                   // Unexpanded text field is clipped
                                                   // at 2 lines.
                                                   Text(
-                                                 translate(fruit.description),
+                                                 language.translate(fruit.description),
                                                 softWrap: true,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
@@ -152,7 +154,7 @@ class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
 
                                               // Description is static and stored in assets.dart
                                               child: Text(
-                                                translate(fruit.description),
+                                                language.translate(fruit.description),
                                               ),
                                             ),
                                             ExpandableButton(
@@ -264,6 +266,7 @@ class _DetailPageState extends State<DetailPage> with LanguageChangeMixin{
                 ),
               );
             });
+        });
       },
     );
   }

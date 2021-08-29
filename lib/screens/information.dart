@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/Dialog/NameFruitDialogComponents/NameFruitDialog.dart';
+import 'package:fruitapp/Model_Classes/Fruit.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/detail.dart';
 import 'package:fruitapp/screens/statistics.dart';
 import 'package:provider/provider.dart';
-
-import '../Fruit.dart';
 
 class InformationPage extends StatefulWidget {
   @override
