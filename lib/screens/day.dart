@@ -110,11 +110,7 @@ class _DayPageState extends State<DayPage> {
         onPressed: () {
           print("Initialize Database Called");
           Provider.of<InitializeModel>(context, listen: false)
-              .initializeDatabase(context)
-              .then((value) => {
-                    Provider.of<NameFruitModel>(context, listen: false)
-                        .refresh()
-                  });
+              .initializeDatabase(context);
           showDialog(
               context: context,
               builder: (context) {

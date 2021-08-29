@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Model_Classes/NameFruit.dart';
 import 'package:fruitapp/Model_Classes/SubNameFruit.dart';
+import 'package:provider/provider.dart';
+
+import 'name_fruit_dialog_model.dart';
 
 class InitializeModel extends ChangeNotifier {
   // Load the fruits of a date.
@@ -37,9 +40,12 @@ class InitializeModel extends ChangeNotifier {
                             initial["data"][i][fruitNames[i]]["subtypes"])
                       },
                   },
-              });
-      return;
+              }).then((value) => {
+                  Provider.of<NameFruitModel>(context, listen: false)
+                      .refresh()
+      });
     });
+
   }
 
   Future addNameFruit(NameFruit nameFruit, var subCat) async {
